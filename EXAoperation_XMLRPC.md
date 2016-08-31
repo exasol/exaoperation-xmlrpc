@@ -4,13 +4,13 @@
 
 Methods, which are available for every service.
 
-### `getPath`
+### Method `getPath`
 
 Return absolute and relative pathes to current object
 
 Usage: `object.getPath()`
 
-### `getListValues`
+### Method `getListValues`
 
 Return various list values depending on a type of object.
 
@@ -47,29 +47,29 @@ Parameters:
   * `VLAN`
   * `Volumes`
 
-### `listMethods`
+### Method `listMethods`
 
 Introspection function. Return a list of all supported methods.
 
 Usage: `object.listMethods()`
 
-### `methodHelp`
+### Method `methodHelp`
 
 Introspection method. Return a description for a given function.
 
 Usage: `object.methodHelp(method_name)`
   
-### `methodSignature`
+### Method `methodSignature`
 
 Introspection method. Return a list of parameters for a given function. Function is not completly supported, please call object.methodHelp() to get a description of a parameters.
 
 Usage: `object.methodSignature(method_name)`
 
-## `BucketFS`
+## Service `BucketFS`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `addBucket`
+### Method `addBucket`
 
 Create a new object type BucketFSBucket
 
@@ -85,11 +85,11 @@ Function takes a dictionary with parameters, allowed keys are:
 * `write_password` (`Password`)
   Password for write access.
 
-### `deleteSubObject`
+### Method `deleteSubObject`
 
 Delete the subobject, defined by it's name and all settings
 
-### `editBucketFS`
+### Method `editBucketFS`
 
 Edits object.
 
@@ -103,7 +103,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `https_port` (`Int`, optional)
   Port for SSL encrypted FS access.
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `description`
@@ -115,11 +115,11 @@ Function returns a dictionary that describes an object. Keys are:
 * `https_port`
   Port for SSL encrypted FS access.
 
-## `BucketFSBucket`
+## Service `BucketFSBucket`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `editBucketFSBucket`
+### Method `editBucketFSBucket`
 
 Edits object.
 
@@ -135,25 +135,25 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `write_password` (`Password`)
   Password for write access.
 
-### `getProperties`
+### Method `getProperties`
 
 This object has no properties.
 
-## `Database`
+## Service `Database`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/db_<object_name>/`
 
 Note: the EXASolution systems need prefix 'db_'
 
-### `abortBackup`
+### Method `abortBackup`
 
 Abort running database backup.
 
-### `abortShrink`
+### Method `abortShrink`
 
 Abort shrink operation of database.
 
-### `backupDatabase`
+### Method `backupDatabase`
 
 Start backup to given storage volume with given level and expiration time.
 
@@ -162,19 +162,19 @@ Parameters:
   level  - backup level
   expire - expire time for backup
 
-### `backupInfo`
+### Method `backupInfo`
 
 Return information for a backup.
 
-### `changeBackupExpiration`
+### Method `changeBackupExpiration`
 
 Change expiration time of a backup.
 
-### `createDatabase`
+### Method `createDatabase`
 
 Create a fresh database, must not exist jet.
 
-### `deleteBackups`
+### Method `deleteBackups`
 
 Delete given backups
 
@@ -182,13 +182,13 @@ Usage: database.deleteBackups(backup_list)
 Parameters: 
   backup_list - a list of backups, Can be recieved with database.backupList()
 
-### `deleteUnusableBackups`
+### Method `deleteUnusableBackups`
 
 Delete all unusable backups for current database.
 
 Usage: database.deleteUnusableBackups()
 
-### `editDatabase`
+### Method `editDatabase`
 
 Edits object.
 
@@ -224,7 +224,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `volume_restore_delay` (`TextLine`, optional)
   Move failed volume nodes to used reserve nodes automaticaly after given amount of time, or disable it with no value.
 
-### `enlargeDatabase`
+### Method `enlargeDatabase`
 
 Enlarge an existing database. Precondition: the database should be stopped.
 Warning - the changes made by this function could not be undone. Function increase
@@ -234,23 +234,23 @@ Usage: database.enlargeDatabase(count_of added_active_nodes)
 Parameters:
   count_of_added_active_nodes - a number of nodes, that will be ADDED to an existing number.
 
-### `existDatabase`
+### Method `existDatabase`
 
 Return whether the database exists or not.
 
-### `forceShutdownDatabase`
+### Method `forceShutdownDatabase`
 
 Force shutdown of database, must be running.
 
-### `getBackgroundRestoreState`
+### Method `getBackgroundRestoreState`
 
 Returns current background restore state.
 
-### `getBackupSchedule`
+### Method `getBackupSchedule`
 
 Return a list of scheduled backups
 
-### `getBackups`
+### Method `getBackups`
 
 Return a list of available backups for this database.
 
@@ -259,39 +259,39 @@ Parameters:
   show_all_databases - show backups not for only this database
   show_expired_backups - not exclude expired backups from list
 
-### `getCurrentDatabaseSize`
+### Method `getCurrentDatabaseSize`
 
 Get current database size.
 
-### `getCurrentErrors`
+### Method `getCurrentErrors`
 
 Get current reasons for not starting a database.
 
-### `getDatabaseVersion`
+### Method `getDatabaseVersion`
 
 Return current database version.
 
-### `getDatabaseVolumeNodesMatch`
+### Method `getDatabaseVolumeNodesMatch`
 
 Return information about database nodes match to volume nodes.
 
-### `getDatabaseVolumeOfflineSegments`
+### Method `getDatabaseVolumeOfflineSegments`
 
 Return number of offline data volume segments.
 
-### `getNextSchedules`
+### Method `getNextSchedules`
 
 Get scheduling for next period of time.
 
-### `getNodeState`
+### Method `getNodeState`
 
 Return the state of a node: online, offline or failed.
 
-### `getPddProgress`
+### Method `getPddProgress`
 
 Get information about current PDD processes (Backup/Restore).
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `clients_port_number`
@@ -325,19 +325,19 @@ Function returns a dictionary that describes an object. Keys are:
 * `volume_restore_delay`
   Move failed volume nodes to used reserve nodes automaticaly after given amount of time, or disable it with no value.
 
-### `maintenanceDatabase`
+### Method `maintenanceDatabase`
 
 Get maintenance state of database.
 
-### `operationGetCurrent`
+### Method `operationGetCurrent`
 
 Return the current operation
 
-### `restartDatabase`
+### Method `restartDatabase`
 
 Restart database which must be running.
 
-### `restoreDatabase`
+### Method `restoreDatabase`
 
 Start restore from given backup ID and restore type.
 
@@ -346,18 +346,18 @@ Start restore from given backup ID and restore type.
     backup_name - could be obtained by getBackups(), field 'id'. Must have three valus separated by space.
     restore_type - type of restore. Must be one of following - {'blocking'|'nonblocking'|'virtual access'}
 
-### `runningDatabase`
+### Method `runningDatabase`
 
 Return whether the database is started.
 
-### `setBackupSchedule`
+### Method `setBackupSchedule`
 
 Set a list of all scheduled backups.
     
 Parameter:
   list of backup definitions
 
-### `shrinkDatabase`
+### Method `shrinkDatabase`
 
 Shrink a database. This operation can only be apply for running databases.
 
@@ -365,27 +365,27 @@ Usage: database.shrinkDatabase(target_size_in_gb)
 Parameters:
   target_size_in_gb - target size for shrink operation.
 
-### `shutdownDatabase`
+### Method `shutdownDatabase`
 
 Shutdown the database, must be running.
 
-### `startDatabase`
+### Method `startDatabase`
 
 Startup the database, must exists and must not be running.
 
-### `startDatabaseMaintenance`
+### Method `startDatabaseMaintenance`
 
 Start database in maintenance mode, must exist and must not be running.
 
-### `stateDatabase`
+### Method `stateDatabase`
 
 Return human-readable state of database.
 
-## `JDBCDriver`
+## Service `JDBCDriver`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `editJDBCDriver`
+### Method `editJDBCDriver`
 
 Edits object.
 
@@ -399,29 +399,29 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `jdbc_prefix` (`TextLine`)
   Prefix of the JDBC name, must begin with "jdbc:" and ends with ":", like in "jdbc:mysql:".
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `jdbc_jars`
   List of URLs to the JDBC JAR files.
 
-### `removeJARFiles`
+### Method `removeJARFiles`
 
 Remove cached JAR files.
 
-### `uploadFile`
+### Method `uploadFile`
 
 Upload given file.
 
-## `LogService`
+## Service `LogService`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `cleanupLogservice`
+### Method `cleanupLogservice`
 
 Cleanup the logservice directory structure before deleting it.
 
-### `editLogService`
+### Method `editLogService`
 
 Edits object.
 
@@ -453,7 +453,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `remote_syslog_server` (`TextLine`, optional)
   Log messages periodically to the specified remote syslog server via TCP.
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `default_interval`
@@ -471,7 +471,7 @@ Function returns a dictionary that describes an object. Keys are:
 * `remote_syslog_server`
   Log messages periodically to the specified remote syslog server via TCP.
 
-### `logFetchEntries`
+### Method `logFetchEntries`
 
 Fetch log entries from the Logd service.
     Parameters:
@@ -479,11 +479,11 @@ Fetch log entries from the Logd service.
     errlevel    - lowest message level to fetch, possible values: ['Information', 'Notice', 'Warning', 'Error']
     priority    - tag
 
-## `Node`
+## Service `Node`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `addNodeDisk`
+### Method `addNodeDisk`
 
 Create a new object type NodeDisk
 
@@ -505,7 +505,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `raidredundancy` (`Int`, optional)
   Number of copies of each datablock on RAID 10.
 
-### `addStorageDisk`
+### Method `addStorageDisk`
 
 Add aditional storage disk do an active node.
 
@@ -518,11 +518,11 @@ Parameters: devices   - List of devices to use
 Only storage disks and disks without redundancy can be added to an
 active node. Devices must not be used by any other disk.
 
-### `applyDefaultDiskLayout`
+### Method `applyDefaultDiskLayout`
 
 Apply default disk layout to this node.
 
-### `copyNode`
+### Method `copyNode`
 
 Copies node to another
  
@@ -536,15 +536,15 @@ Parameters: number
             vlan_list
             public_network_list
 
-### `deleteDisks`
+### Method `deleteDisks`
 
 Remove disk with given name.
 
-### `deleteSubObject`
+### Method `deleteSubObject`
 
 Delete the subobject, defined by it's name and all settings
 
-### `editNode`
+### Method `editNode`
 
 Edits object.
 
@@ -596,112 +596,112 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `vlan_list` (`FixedDict`)
   Additional private network interfaces in node.
 
-### `fixChecksums`
+### Method `fixChecksums`
 
 Fix/delete checksums of disks.
 
-### `getAllDisks`
+### Method `getAllDisks`
 
 Return list of disk names.
 
-### `getDeviceInfo`
+### Method `getDeviceInfo`
 
 Return information about devices.
 
-### `getDiskInfo`
+### Method `getDiskInfo`
 
 Return info about disk
 
-### `getNodeInfo`
+### Method `getNodeInfo`
 
 Return node information.
 
-### `getProperties`
+### Method `getProperties`
 
 This object has no properties.
 
-### `getSrvMgmtConsoleParameters`
+### Method `getSrvMgmtConsoleParameters`
 
 Return info about parameters necessary for Server Management console
 
-### `nodeRunning`
+### Method `nodeRunning`
 
 Return whether the node is running.
 
-### `poweroffNode`
+### Method `poweroffNode`
 
 Power off the node immediatly.
 
-### `rebootNode`
+### Method `rebootNode`
 
 Reboot the node.
 
-### `resetNode`
+### Method `resetNode`
 
 Reset the node immediatly.
 
-### `setActiveMode`
+### Method `setActiveMode`
 
 Set the node to Active state. The node in active state is available to all cluster services.
 
 Usage: node.setActiveMode()
 
-### `setForceFSCKMode`
+### Method `setForceFSCKMode`
 
 Set the node to Force fsck state.
 
 Usage: node.setFSCKMode()
 
-### `setForceNoFSCKMode`
+### Method `setForceNoFSCKMode`
 
 Set the node to Force No fsck state.
 
 Usage: node.setNoFSCKMode()
 
-### `setInstallMode`
+### Method `setInstallMode`
 
 Set the node to Install state. After next reboot the node will be installed.
 
 Usage: node.setInstallMode()
 
-### `setWipeMode`
+### Method `setWipeMode`
 
 Set the node to To Wipe state. After boot the all data will be erased.
     
 Usage: node.setWipeMode()
 
-### `shutdownNode`
+### Method `shutdownNode`
 
 Shutdown the node.
 
-### `startClusterServices`
+### Method `startClusterServices`
 
 Start Core daemon on this node.
 
-### `startupNode`
+### Method `startupNode`
 
 Power on and startup the node.
 
-### `stopClusterServices`
+### Method `stopClusterServices`
 
 Stop Core daemon on this node.
 
-### `toggleIdLed`
+### Method `toggleIdLed`
 
 Toggle the ID LED on the given node.
 
-## `NodeCluster`
+## Service `NodeCluster`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/`
 
-### `activateNodes`
+### Method `activateNodes`
 
 Set nodes from a given list node_names to active state.
 Usage:
 nodes_list = [u'n0110', u'n0108']
 cluster.activateNodes(nodes_list)
 
-### `addBucketFS`
+### Method `addBucketFS`
 
 Create a new object type BucketFS
 
@@ -715,7 +715,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `https_port` (`Int`, optional)
   Port for SSL encrypted FS access.
 
-### `addDatabase`
+### Method `addDatabase`
 
 Create a new object type Database
 
@@ -749,7 +749,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `volume_restore_delay` (`TextLine`, optional)
   Move failed volume nodes to used reserve nodes automaticaly after given amount of time, or disable it with no value.
 
-### `addJDBCDriver`
+### Method `addJDBCDriver`
 
 Create a new object type JDBCDriver
 
@@ -763,7 +763,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `jdbc_prefix` (`TextLine`)
   Prefix of the JDBC name, must begin with "jdbc:" and ends with ":", like in "jdbc:mysql:".
 
-### `addKeyStore`
+### Method `addKeyStore`
 
 Create a new object type KeyStore
 
@@ -777,7 +777,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `keylabel` (`TextLine`)
   Label to identify the key in the security module.
 
-### `addLogService`
+### Method `addLogService`
 
 Create a new object type LogService
 
@@ -809,7 +809,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `remote_syslog_server` (`TextLine`, optional)
   Log messages periodically to the specified remote syslog server via TCP.
 
-### `addNode`
+### Method `addNode`
 
 Create a new object type Node
 
@@ -865,13 +865,13 @@ Function takes a dictionary with parameters, allowed keys are:
 * `vlan_list` (`FixedDict`)
   Additional private network interfaces in node.
 
-### `addNodesFromXML`
+### Method `addNodesFromXML`
 
 Parses a xml_description to a XML with node definition and add new nodes,
 When overwrite is set to True, it will overwrite the existing nodes with the same names.
 Usage : cluster.addNodesFromXMl(xml_description, overwrite)
 
-### `addPublicNetwork`
+### Method `addPublicNetwork`
 
 Create a new object type PublicNetwork
 
@@ -885,7 +885,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `public_network_description` (`TextLine`)
   Description of this public network.
 
-### `addRemoteVolume`
+### Method `addRemoteVolume`
 
 Create a new object type RemoteVolume
 
@@ -905,7 +905,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `user` (`TextLine`, optional)
   Username for remote archive.
 
-### `addRoute`
+### Method `addRoute`
 
 Create a new object type Route
 
@@ -921,7 +921,7 @@ Function takes a dictionary with parameters, allowed keys are:
   * Network
   * Host
 
-### `addScriptExtension`
+### Method `addScriptExtension`
 
 Create a new object type ScriptExtension
 
@@ -939,7 +939,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `url` (`TextLine`)
   URL of software repository, e.g. https://pypi.python.org/simple
 
-### `addSrvMgmtGroup`
+### Method `addSrvMgmtGroup`
 
 Create a new object type SrvMgmtGroup
 
@@ -957,7 +957,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `public_ip_addresses` (`Bool`, optional)
   Location of IPMI cards (private/public network).
 
-### `addUser`
+### Method `addUser`
 
 Create an EXAoperation user.
 
@@ -970,7 +970,7 @@ user_description - short description
 ldapServer       - URL of ldap(s) service
 ldapFullDN       - Full DN string to authenticate user on LDAP Service
 
-### `addVLAN`
+### Method `addVLAN`
 
 Create a new object type VLAN
 
@@ -982,47 +982,47 @@ Function takes a dictionary with parameters, allowed keys are:
 * `vlan_description` (`TextLine`)
   Description of this private network.
 
-### `applyRemoteSyslogSettings`
+### Method `applyRemoteSyslogSettings`
 
 Apply remote syslog settings.
 
-### `clusterDesc`
+### Method `clusterDesc`
 
 Return cluster description
 
-### `deleteDatabaseCheck`
+### Method `deleteDatabaseCheck`
 
 Check the posibility of delete database.
 
-### `deleteLogs`
+### Method `deleteLogs`
 
 Delete logs/coredumps.
 
-### `deleteNodeCheck`
+### Method `deleteNodeCheck`
 
 Check the posibility of delete node.
 
-### `deleteNodeDiskCheck`
+### Method `deleteNodeDiskCheck`
 
 Check the posibility of delete node disk.
 
-### `deleteSubObject`
+### Method `deleteSubObject`
 
 Delete the subobject, defined by it's name and all settings
 
-### `deleteUserById`
+### Method `deleteUserById`
 
 Delete a user by given User ID
 
-### `deleteUserByLogin`
+### Method `deleteUserByLogin`
 
 Delete a user by a given login
 
-### `deleteVolumeCheck`
+### Method `deleteVolumeCheck`
 
 Check the posibility of delete volume.
 
-### `editMonitorThresholds`
+### Method `editMonitorThresholds`
 
 Edits object.
 
@@ -1044,7 +1044,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `swap_warning` (`Int`)
   Level upon which warnings about swap space will be issued.
 
-### `editNodeClusterDefaults`
+### Method `editNodeClusterDefaults`
 
 Edits object.
 
@@ -1064,7 +1064,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `default_swap_size` (`Int`)
   Default size of the swap disk in GiB.
 
-### `editNodeClusterLicense`
+### Method `editNodeClusterLicense`
 
 Edits object.
 
@@ -1088,7 +1088,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `license_validation_key` (`Text`)
   Key created by EXASOL for license validation.
 
-### `editNodeClusterNetwork`
+### Method `editNodeClusterNetwork`
 
 Edits object.
 
@@ -1128,7 +1128,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `time_zone` (`Choice`)
   The time zone of cluster.
 
-### `editNodeClusterPasswords`
+### Method `editNodeClusterPasswords`
 
 Edits object.
 
@@ -1142,7 +1142,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `vm_password` (`Password`)
   Password for the VM shares.
 
-### `editNodeClusterVersions`
+### Method `editNodeClusterVersions`
 
 Edits object.
 
@@ -1154,7 +1154,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `plugins` (`List`)
   List of installed plugins.
 
-### `editRemoteSyslogSettings`
+### Method `editRemoteSyslogSettings`
 
 Edits object.
 
@@ -1164,192 +1164,192 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `remote_syslog_encrypted` (`Bool`, optional)
   Defines whether or not to use TLS for transmission of syslog messages.
 
-### `editUser`
+### Method `editUser`
 
 Edit an EXAoperation user
 Usage: cluster.editUser(user_login, user_data)
 
-### `getAllArchiveVolumes`
+### Method `getAllArchiveVolumes`
 
 Return a list of all archive volumes(local and remote).
 
 Usage: cluster.getAllArchiveVolumes()
 
-### `getAllDatabaseNames`
+### Method `getAllDatabaseNames`
 
 Return the list of databases' names.
 
-### `getAllDatabases`
+### Method `getAllDatabases`
 
 Return the list with all databases' ids
 
-### `getAllJDBCDrivers`
+### Method `getAllJDBCDrivers`
 
 Return a list of all installed JDBC drivers,
     
 Usage: cluster.getAllJDBCDrivers()
 
-### `getAllKeyStores`
+### Method `getAllKeyStores`
 
 Return list of all defined Password storages
 
-### `getAllLogServices`
+### Method `getAllLogServices`
 
 Return a list of all logservices.
     
 Usage: cluster.getAllLogServices()
 
-### `getAllPublicNetworks`
+### Method `getAllPublicNetworks`
 
 Return names of all public networks (sorted).
 
-### `getAllRoutes`
+### Method `getAllRoutes`
 
 Return a list of all routes.
 
 Usage: cluster.getAllRoutes()
 
-### `getAllScriptExtensions`
+### Method `getAllScriptExtensions`
 
 Return a list of all installed UDF Libraries
 
-### `getAllSrvMgmtCardGroups`
+### Method `getAllSrvMgmtCardGroups`
 
 Return a list of all Server Management Card Groups
 
 Usage: cluster.getAllSrvMgmtCardGroups()
 
-### `getAllUserLogins`
+### Method `getAllUserLogins`
 
 Return a list of all user logins
 
-### `getAllUsers`
+### Method `getAllUsers`
 
 Return a list of all users
 
-### `getAllUsersById`
+### Method `getAllUsersById`
 
 Return a dictionary of all users by id
 
-### `getAllUsersByLogin`
+### Method `getAllUsersByLogin`
 
 Return a dictionary of all users byl login
 
-### `getAllVLANs`
+### Method `getAllVLANs`
 
 Return names of all VLANs (sorted).
 
-### `getAvailableUpdatesList`
+### Method `getAvailableUpdatesList`
 
 Return a list of available updates, if the Update URL is defined.
 
-### `getClusterNodesAsXMLBase64`
+### Method `getClusterNodesAsXMLBase64`
 
 Return a base64-encoded string, that represent luster nodes in XML format
 
 Usage: cluster.getClusterNodesAsXMLBase64()
 
-### `getCoredumpDeletionTime`
+### Method `getCoredumpDeletionTime`
 
 Get deletion time of coredumps.
 
-### `getCurrentLicenseServer`
+### Method `getCurrentLicenseServer`
 
 Returns the license Server number.
 
-### `getDefaultParameters`
+### Method `getDefaultParameters`
 
 Get list of current license default parameters.
 
-### `getDomainName`
+### Method `getDomainName`
 
 Returns the domain name.
 
-### `getEXACOSVersion`
+### Method `getEXACOSVersion`
 
 Return a string with current COS Version
 
-### `getEXASolutionVersions`
+### Method `getEXASolutionVersions`
 
 Return a list with installed EXASolution Versions
 
-### `getEXASuiteVersion`
+### Method `getEXASuiteVersion`
 
 Returns the version of the installed EXASuite package.
 
-### `getEXAoperationNodes`
+### Method `getEXAoperationNodes`
 
 Get list of nodes, where EXAoperation could run
 
-### `getInstallationHistory`
+### Method `getInstallationHistory`
 
 Return list of relevant installation details.
 
-### `getInstalledJDBCDrivers`
+### Method `getInstalledJDBCDrivers`
 
 Return list of ids of all installed JDBC Drivers
 
-### `getKeyStoreByName`
+### Method `getKeyStoreByName`
 
 Return a Password storage defined by name
 
-### `getKeyStoreByObjName`
+### Method `getKeyStoreByObjName`
 
 Return a Password storage defined by name
 
-### `getLegalInfo`
+### Method `getLegalInfo`
 
 Get list of al used 3rd-party licenses.
 
-### `getLicenseFeatures`
+### Method `getLicenseFeatures`
 
 Get list of current license features and expiration date.
 
-### `getLicenseLimits`
+### Method `getLicenseLimits`
 
 Get list of current license limits.
 
-### `getLicenseProperties`
+### Method `getLicenseProperties`
 
 Get current license properties
 
-### `getLoginRole`
+### Method `getLoginRole`
 
 Return login role of specified user.
 
-### `getMonitoringThresholdValues`
+### Method `getMonitoringThresholdValues`
 
 Get monitoring threshold values.
 
-### `getNTPServiceState`
+### Method `getNTPServiceState`
 
 Get state of all NTP servers.
 
-### `getObsoleteEXASuiteVersions`
+### Method `getObsoleteEXASuiteVersions`
 
 Get all possible obsolete EXASuite versions.
 
-### `getPlugins`
+### Method `getPlugins`
 
 Return a list of installed plugins
 
-### `getPossibleEXAoperationNodes`
+### Method `getPossibleEXAoperationNodes`
 
 Returns online nodes.
 
-### `getProperties`
+### Method `getProperties`
 
 This object has no properties.
 
-### `getPublicNetwork`
+### Method `getPublicNetwork`
 
 Return real public network name from descriptive name or None.
 
-### `getPublicNetworkDescription`
+### Method `getPublicNetworkDescription`
 
 Return real public network name from descriptive name or None.
 
-### `getRolesForObject`
+### Method `getRolesForObject`
 
 Return a list of users with grants
     
@@ -1365,39 +1365,39 @@ The return value is a list of dictionaries. The keys are:
   default  - False, if the role is granted directly to this object
              True , if the role is derived from its parent object
 
-### `getServiceStates`
+### Method `getServiceStates`
 
 Get state of all necessary EXAClusterOS services.
 
-### `getSoftware`
+### Method `getSoftware`
 
 Get new software version from remote repository.
 
-### `getSqlLogDeletionTime`
+### Method `getSqlLogDeletionTime`
 
 Get deletion time of sql logs.
 
-### `getSrvMgmtGroup`
+### Method `getSrvMgmtGroup`
 
 Return description of a Server Management group from descriptive name or None.
 
-### `getSrvMgmtGroupDescription`
+### Method `getSrvMgmtGroupDescription`
 
 Return descriptive name of a Server Management card group.
 
-### `getSupportData`
+### Method `getSupportData`
 
 Return the information for EXASOL support.
 
-### `getUpdateURL`
+### Method `getUpdateURL`
 
 Get connection URL of update repository (including username/password).
 
-### `getUploadPackageState`
+### Method `getUploadPackageState`
 
 Return a state of Upload Package's process
 
-### `getUserById`
+### Method `getUserById`
 
 Return a user description by a given id
 
@@ -1405,7 +1405,7 @@ Usage cluster.getUserById(user_id)
 Parameters:
   user_id - user's id (number as int or string)
 
-### `getUserByName`
+### Method `getUserByName`
 
 Return a user description by a given login
 
@@ -1413,15 +1413,15 @@ Usage: cluster.getUserByName(user_name)
 Parameters:
   user_name - user's login
 
-### `getVLAN`
+### Method `getVLAN`
 
 Return real VLAN name from descriptive name or None.
 
-### `getVLANDescription`
+### Method `getVLANDescription`
 
 Return descriptive name of a VLAN net.
 
-### `grantRole`
+### Method `grantRole`
 
 Set a given role on cluster object to user.
 
@@ -1431,42 +1431,42 @@ Parameters:
   user_id     - id of a user (can be retrieved from cluster.getAllUsers() )
   role_name   - one of [u'User', u'Supervisor', u'Administrator', u'Master']
 
-### `havePlugins`
+### Method `havePlugins`
 
 Return True if plugins are installed
 
-### `licenseUpdate`
+### Method `licenseUpdate`
 
 Check and update the license aggreenments.
 
 Usage: cluster.licenseUpdate(license_data)
 Parameters: license_data - license data as xml-formatted string
 
-### `needEXAoperationRestart`
+### Method `needEXAoperationRestart`
 
 Return True if EXAoperation should be restarted
 
-### `ntpServersConfigured`
+### Method `ntpServersConfigured`
 
 Return true if any NTP server is configured.
 
-### `numberOfAvailableNodes`
+### Method `numberOfAvailableNodes`
 
 Return number of nodes a user can add or 1024*1024 (unlimited).
 
-### `powerOffLicenseServer`
+### Method `powerOffLicenseServer`
 
 Restart license server.
 
-### `reinitEXAoperationPriorities`
+### Method `reinitEXAoperationPriorities`
 
 Set priority of EXAoperation nodes.
 
-### `removeAllScripts`
+### Method `removeAllScripts`
 
 Remove all installed UDF Libraries.
 
-### `removeDatabase`
+### Method `removeDatabase`
 
 Remove an old database version.
 
@@ -1475,11 +1475,11 @@ Parameters:
 Raises UsageError if a database with a given version is configured in a cluster 
 or if an error occured during a deletion.
 
-### `removeObsoleteEXASuite`
+### Method `removeObsoleteEXASuite`
 
 Remove obsolete software to save space.
 
-### `removePlugin`
+### Method `removePlugin`
 
 Remove a plugin.
 
@@ -1487,7 +1487,7 @@ Parameters:
   name - name of plugin to be deleted.
 Raises UsageError if an eror occured.
 
-### `restartEXAoperation`
+### Method `restartEXAoperation`
 
 Restart EXAoperation server.
     
@@ -1495,15 +1495,15 @@ Usage: cluster.restartEXAoperation(node).
 Parameters: 
   -node - a node name to start EXAoperation on. If '', the EXaoperation will be restarted on a current node.
 
-### `restartLicenseServer`
+### Method `restartLicenseServer`
 
 Restart license server.
 
-### `saveBucketFSChanges`
+### Method `saveBucketFSChanges`
 
 Save changes of bucketfs properties to file.
 
-### `setDefaultRole`
+### Method `setDefaultRole`
 
 Unset all granted roles and set a default role for user.
 
@@ -1512,44 +1512,44 @@ Parameters:
   object_name - name of an object in the cluster
   user_id     - id of a user (can be retrieved from cluster.getAllUsers() )
 
-### `setDiskPassword`
+### Method `setDiskPassword`
 
 Set a node disk password. 
     
 Usage: cluster.setDiskPassword(new_node_disk_password)
 
-### `setKeyStore`
+### Method `setKeyStore`
 
 Set a new new key store for cluster.
     
 Usage: cluster.setKeyStore(key_store_name)
 Parameters:  key_store_name - name of a key store as it defined in object's properties.
 
-### `setPriorities`
+### Method `setPriorities`
 
 Set EXAoperation node priorities.
 
-### `synchronizeNTP`
+### Method `synchronizeNTP`
 
 Synchronize license server with NTP servers.
 
-### `uploadSoftware`
+### Method `uploadSoftware`
 
 Upload a new database version.
 
-## `NodeClusterAfterAdd`
+## Service `NodeClusterAfterAdd`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `getProperties`
+### Method `getProperties`
 
 This object has no properties.
 
-## `NodeClusterKeyStore`
+## Service `NodeClusterKeyStore`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `editNodeClusterKeyStore`
+### Method `editNodeClusterKeyStore`
 
 Edits object.
 
@@ -1563,7 +1563,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `keylabel` (`TextLine`)
   Label to identify the key in the security module.
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `key_store_attributes`
@@ -1575,23 +1575,23 @@ Function returns a dictionary that describes an object. Keys are:
 * `keylabel`
   Label to identify the key in the security module.
 
-### `getStatus`
+### Method `getStatus`
 
 Get status of key store.
 
-### `lock`
+### Method `lock`
 
 Lock key.
 
-### `unlock`
+### Method `unlock`
 
 Unlock key.
 
-## `NodeClusterPublicNetwork`
+## Service `NodeClusterPublicNetwork`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `editNodeClusterPublicNetwork`
+### Method `editNodeClusterPublicNetwork`
 
 Edits object.
 
@@ -1605,7 +1605,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `public_network_description` (`TextLine`)
   Description of this public network.
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `bonding_network`
@@ -1617,11 +1617,11 @@ Function returns a dictionary that describes an object. Keys are:
 * `public_network_description`
   Description of this public network.
 
-## `NodeClusterRoute`
+## Service `NodeClusterRoute`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `editNodeClusterRoute`
+### Method `editNodeClusterRoute`
 
 Edits object.
 
@@ -1637,7 +1637,7 @@ Function take a dictionary with parameters and return a list of fields, that was
   * Network
   * Host
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `route_destination`
@@ -1647,11 +1647,11 @@ Function returns a dictionary that describes an object. Keys are:
 * `route_type`
   Type of route.
 
-## `NodeClusterSrvMgmtGroup`
+## Service `NodeClusterSrvMgmtGroup`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `editNodeClusterSrvMgmtGroup`
+### Method `editNodeClusterSrvMgmtGroup`
 
 Edits object.
 
@@ -1669,7 +1669,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `public_ip_addresses` (`Bool`, optional)
   Location of IPMI cards (private/public network).
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `ipmi_description`
@@ -1685,11 +1685,11 @@ Function returns a dictionary that describes an object. Keys are:
 * `public_ip_addresses`
   Location of IPMI cards (private/public network).
 
-## `NodeClusterVLAN`
+## Service `NodeClusterVLAN`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `editNodeClusterVLAN`
+### Method `editNodeClusterVLAN`
 
 Edits object.
 
@@ -1701,7 +1701,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `vlan_description` (`TextLine`)
   Description of this private network.
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `bonding_network`
@@ -1711,19 +1711,19 @@ Function returns a dictionary that describes an object. Keys are:
 * `vlan_description`
   Description of this private network.
 
-## `NodeDisk`
+## Service `NodeDisk`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/<node_name>/<object_name>/`
 
-### `addDevice`
+### Method `addDevice`
 
 Append device with given name to the current disk of an active node.
 
-### `diskIsExtendable`
+### Method `diskIsExtendable`
 
 Returns True if new devices could be added to this disk.
 
-### `editNodeDisk`
+### Method `editNodeDisk`
 
 Edits object.
 
@@ -1741,15 +1741,15 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `raidredundancy` (`Int`, optional)
   Number of copies of each datablock on RAID 10.
 
-### `getProperties`
+### Method `getProperties`
 
 This object has no properties.
 
-## `RemoteVolume`
+## Service `RemoteVolume`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `editRemoteVolume`
+### Method `editRemoteVolume`
 
 Edits object.
 
@@ -1769,7 +1769,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `user` (`TextLine`, optional)
   Username for remote archive.
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `allowed_users`
@@ -1787,19 +1787,19 @@ Function returns a dictionary that describes an object. Keys are:
 * `user`
   Username for remote archive.
 
-### `getVolumeId`
+### Method `getVolumeId`
 
 Return 'virtual' volume ID of remote archive volume.
 
-### `state`
+### Method `state`
 
 Return connectivity state of remote archive volume.
 
-## `ScriptExtension`
+## Service `ScriptExtension`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `editEXAPScript`
+### Method `editEXAPScript`
 
 Edits object.
 
@@ -1817,11 +1817,11 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `url` (`TextLine`)
   URL of software repository, e.g. https://pypi.python.org/simple
 
-### `getInstallationLog`
+### Method `getInstallationLog`
 
 Get installation log of script.
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `description`
@@ -1837,49 +1837,49 @@ Function returns a dictionary that describes an object. Keys are:
 * `url`
   URL of software repository, e.g. https://pypi.python.org/simple
 
-### `getStatus`
+### Method `getStatus`
 
 Get installation status of script.
 
-### `installNow`
+### Method `installNow`
 
 Install script now.
 
-## `SetupCommand`
+## Service `SetupCommand`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `cmd`
   Command to execute.
 
-## `SetupNodeNumber`
+## Service `SetupNodeNumber`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `node_number`
   Node number of the EXAoperation node.
 
-## `SetupValue`
+## Service `SetupValue`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `value`
   Value of parameter.
 
-## `Storage`
+## Service `Storage`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/storage/`
 
-### `addStorageVolume`
+### Method `addStorageVolume`
 
 Create a new object type StorageVolume
 
@@ -1911,15 +1911,15 @@ Function takes a dictionary with parameters, allowed keys are:
   * Data
   * Archive
 
-### `checkNodeDiskInformation`
+### Method `checkNodeDiskInformation`
 
 Return node list about nodes whose disks can be checked.
 
-### `deleteMetadata`
+### Method `deleteMetadata`
 
 Delete Storage metadata from all online nodes.
 
-### `editStorage`
+### Method `editStorage`
 
 Edits object.
 
@@ -1927,24 +1927,24 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `vlan_list` (`List`)
   Network interfaces to use for storage. Leave empty to use the first network interface.
 
-### `getArchiveFilesystems`
+### Method `getArchiveFilesystems`
 
 Return dictionary with permitted for a user remote and archive volumes.
 The returned values are tupples (<OBJECT_TYPE>, <ID>, <PERMISSIONS>)
 
 Usage: storage.getArchiveFileSystems()
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `vlan_list`
   Network interfaces to use for storage. Leave empty to use the first network interface.
 
-### `getStorageInfo`
+### Method `getStorageInfo`
 
 Returns information about storage.
 
-### `getVolumeInfo`
+### Method `getVolumeInfo`
 
 Returns information about volume.
     
@@ -1952,45 +1952,45 @@ Usage: storage.getVolumeInfo(vid)
 Parameters:
   vid - volume id as returned by getVolumeList().
 
-### `getVolumeList`
+### Method `getVolumeList`
 
 Return a dictionary with description of volumes in EXAStorage.
 
 Usage: storage.getVolumeList()
 
-### `nodesInformation`
+### Method `nodesInformation`
 
 Returns information about nodes.
 
-### `nodesListInformation`
+### Method `nodesListInformation`
 
 Returns information about Storage nodes.
 
-### `serviceHasAutoRestartFlag`
+### Method `serviceHasAutoRestartFlag`
 
 Return True if auto-restart flag is set for Storage service.
 
-### `serviceIsOnline`
+### Method `serviceIsOnline`
 
 Return True if the storage service is online.
 
-### `setAutoRestartFlag`
+### Method `setAutoRestartFlag`
 
 Set auto-restart flag for Storage service.
 
-### `storageHasQuorum`
+### Method `storageHasQuorum`
 
 Return a boolean, showing if storage service has quorum.
 
-### `volumeRemove`
+### Method `volumeRemove`
 
 Remove volume
 
-## `StorageNode`
+## Service `StorageNode`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/storage/<object_name>/`
 
-### `addUnusedDevices`
+### Method `addUnusedDevices`
 
 Add all disks, which are not added before.
 
@@ -2001,45 +2001,45 @@ Return a list of dictionaries with added devices Keys are:
   type
   disk.
 
-### `changeable`
+### Method `changeable`
 
 Return whether node could contain Storage disks.
 
-### `clearDeviceErrors`
+### Method `clearDeviceErrors`
 
 Clear device errors counter.
 
-### `disableBgRecovery`
+### Method `disableBgRecovery`
 
 Disable background recovery.
 
-### `disableDevices`
+### Method `disableDevices`
 
 Disable list of devices.
 
-### `enableBgRecovery`
+### Method `enableBgRecovery`
 
 Enable background recovery.
 
-### `enableDevices`
+### Method `enableDevices`
 
 Enable list of devices.
 
-### `enlargeDevices`
+### Method `enlargeDevices`
 
 Enlarge list of devices.
 
-### `forceBgRecoveryLimitCalibration`
+### Method `forceBgRecoveryLimitCalibration`
 
 Force background recalibration.
 
-### `getAllDevices`
+### Method `getAllDevices`
 
 Return a list of disks on a node.
 
 Usage: storage_node.getAllDevices()
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `auto_bg_rec_limit`
@@ -2067,7 +2067,7 @@ Function returns a dictionary that describes an object. Keys are:
 * `state`
   State of the volume.
 
-### `getUnusedDevices`
+### Method `getUnusedDevices`
 
 Return a list of devices which are not used in storage.
     
@@ -2077,11 +2077,11 @@ Parameters:
   disk - to get unused devices on a specific disk. If disk is an empty string,
          a corresponding disk will be found
 
-### `nodeIsSuspended`
+### Method `nodeIsSuspended`
 
 Return wheter node is suspended or not.
 
-### `removeDevices`
+### Method `removeDevices`
 
 Remove list of devices.
 
@@ -2089,27 +2089,27 @@ Usage: storage_node.removeDevices(devnames)
 Parameters:
   devnames - list of disk names. The name of disk is returned by storage_node.getAllDevices, dictionary key 'name'.
 
-### `restartNode`
+### Method `restartNode`
 
 Restart current node (only the storage service, not the node it self).
 
-### `resumeNode`
+### Method `resumeNode`
 
 Resume node.
 
-### `setBgRecoveryLimit`
+### Method `setBgRecoveryLimit`
 
 Set background recovery limit in MiB for node.
 
-### `suspendNode`
+### Method `suspendNode`
 
 Suspend node.
 
-## `StorageNodeHDD`
+## Service `StorageNodeHDD`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/storage/<storage_node_name>/<object_name>/`
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `crc_error`
@@ -2131,19 +2131,19 @@ Function returns a dictionary that describes an object. Keys are:
 * `type`
   Disk used for given HDD.
 
-### `isEnlargeable`
+### Method `isEnlargeable`
 
 Deliver information about enlargeability of device.
 
-## `StorageVolume`
+## Service `StorageVolume`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/storage/<object_name>/`
 
-### `checkPermissions`
+### Method `checkPermissions`
 
 Check permissions to access this volume.
 
-### `editStorageVolume`
+### Method `editStorageVolume`
 
 Edits object.
 
@@ -2163,49 +2163,49 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `redundancy` (`Int`)
   Number of redundancy segments per volume part.
 
-### `formatFilesystem`
+### Method `formatFilesystem`
 
 Format SDFS Filesystem.
 
-### `getFilesList`
+### Method `getFilesList`
 
 Return list of files in an archive node.
      
 usage: storage_archive_volume.getFilesList()
 
-### `getPermissions`
+### Method `getPermissions`
 
 Get permissions to access this volume.
 
-### `getProperties`
+### Method `getProperties`
 
 This object has no properties.
 
-### `moveNodes`
+### Method `moveNodes`
 
 Move nodes according to nodes map.
 
-### `removeFile`
+### Method `removeFile`
 
 Remove file with given ID.
 
-### `resizeVolume`
+### Method `resizeVolume`
 
 Add given amount of GiB's to volume size.
 
-### `setFileExpiration`
+### Method `setFileExpiration`
 
 Set file expiration time, 'exptime' argument is number of seconds since the Epoch.
 
-### `setIoState`
+### Method `setIoState`
 
 Set IO state for Volume application or internal IO.
 
-## `StorageVolumeAddSchema`
+## Service `StorageVolumeAddSchema`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `block_size`
@@ -2221,45 +2221,45 @@ Function returns a dictionary that describes an object. Keys are:
 * `volume_type`
   Type of data stored on this volume.
 
-## `StorageVolumeNode`
+## Service `StorageVolumeNode`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/storage/<storage_volume_name>/<object_name>/`
 
-### `getAllSegments`
+### Method `getAllSegments`
 
 Return list of volume node segments.
     
 Usage: storage_volume_node.getAllSegments()
 
-### `getProperties`
+### Method `getProperties`
 
 This object has no properties.
 
-### `getSegmentsDescriptions`
+### Method `getSegmentsDescriptions`
 
 Return a list with descriptions of a segments
 
 Usage: storage_volume_node.getSegmentsDescription()
 
-### `moveNode`
+### Method `moveNode`
 
 Move node to destination node.
 
-### `recoverNode`
+### Method `recoverNode`
 
 Recreate this node from redundancy.
 
-### `stopRecoverNode`
+### Method `stopRecoverNode`
 
 Stop node restore.
 
-## `StorageVolumeNodeSegment`
+## Service `StorageVolumeNodeSegment`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/storage/<storage_volume_name>/<storage_volume_node>/<object_name>/`
 
-### `getPartitions`
+### Method `getPartitions`
 
-### `getProperties`
+### Method `getProperties`
 
 Function returns a dictionary that describes an object. Keys are:
 * `end_block`
@@ -2283,23 +2283,23 @@ Function returns a dictionary that describes an object. Keys are:
 * `type`
   Type of the segment.
 
-## `SupportDebugInfo`
+## Service `SupportDebugInfo`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### `downloadDebugInfo`
+### Method `downloadDebugInfo`
 
 Download debug information.
 
-### `estimateDebugInfoSize`
+### Method `estimateDebugInfoSize`
 
 Get estimated size of debug information.
 
-### `getProperties`
+### Method `getProperties`
 
 This object has no properties.
 
-### `storeDebugInfo`
+### Method `storeDebugInfo`
 
 Store debug information into archive volume.
 
