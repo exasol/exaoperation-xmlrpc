@@ -74,15 +74,15 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Create a new object type BucketFSBucket
 
 Function takes a dictionary with parameters, allowed keys are:
-* `bucket_name` (TextLine)
+* `bucket_name` (`TextLine`)
   The name of bucket.
-* `description` (TextLine, optional)
+* `description` (`TextLine`, optional)
   Some description of this BucketFS Bucket.
-* `public_bucket` (Bool)
+* `public_bucket` (`Bool`)
   Public buckets require no password for reading.
-* `read_password` (Password)
+* `read_password` (`Password`)
   Password readonly access.
-* `write_password` (Password)
+* `write_password` (`Password`)
   Password for write access.
 
 ### `deleteSubObject`
@@ -94,13 +94,13 @@ Delete the subobject, defined by it's name and all settings
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `description` (TextLine, optional)
+* `description` (`TextLine`, optional)
   Some description of this BucketFS.
-* `disk` (Choice)
+* `disk` (`Choice`)
   Disk for BucketFS data.
-* `http_port` (Int, optional)
+* `http_port` (`Int`, optional)
   Port for FS access.
-* `https_port` (Int, optional)
+* `https_port` (`Int`, optional)
   Port for SSL encrypted FS access.
 
 ### `getProperties`
@@ -124,15 +124,15 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `bucket_name` (TextLine)
+* `bucket_name` (`TextLine`)
   The name of bucket.
-* `description` (TextLine, optional)
+* `description` (`TextLine`, optional)
   Some description of this BucketFS Bucket.
-* `public_bucket` (Bool)
+* `public_bucket` (`Bool`)
   Public buckets require no password for reading.
-* `read_password` (Password)
+* `read_password` (`Password`)
   Password readonly access.
-* `write_password` (Password)
+* `write_password` (`Password`)
   Password for write access.
 
 ### `getProperties`
@@ -142,6 +142,7 @@ This object has no properties.
 ## `Database`
 
 URL: `https://<user>:<pass>@<cluster_node>/cluster1/db_<object_name>/`
+
 Note: the EXASolution systems need prefix 'db_'
 
 ### `abortBackup`
@@ -192,35 +193,35 @@ Usage: database.deleteUnusableBackups()
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `clients_port_number` (Int)
+* `clients_port_number` (`Int`)
   Port for client connections.
-* `data_volume` (Choice)
+* `data_volume` (`Choice`)
   Volume for EXASolution database data.
-* `database_comment` (TextLine, optional)
+* `database_comment` (`TextLine`, optional)
   User-defined comment for database (200 charachters max)
-* `database_version` (Choice)
+* `database_version` (`Choice`)
   Version of EXASolution executables.
-* `enable_auditing` (Bool, optional)
+* `enable_auditing` (`Bool`, optional)
   Enable auditing for database
-* `extra_params` (TextLine, optional)
+* `extra_params` (`TextLine`, optional)
   Extra parameters for startup of database.
-* `ldap_server` (TextLine, optional)
+* `ldap_server` (`TextLine`, optional)
   LDAP Server to use for remote database authentication, e.g. ldap[s]://192.168.16.10 . Multiple servers must be separated by commas.
-* `memory_usage` (Int)
+* `memory_usage` (`Int`)
   Amount of database memory (in GiB).
-* `nodes_list_add_reserve` (List, optional)
+* `nodes_list_add_reserve` (`List`, optional)
   List of nodes, which should be added to the system as reserve nodes.
-* `nodes_list_deactivate` (List, optional)
+* `nodes_list_deactivate` (`List`, optional)
   List of nodes which should be deactivated for this system.
-* `nodes_list_reactivate` (List, optional)
+* `nodes_list_reactivate` (`List`, optional)
   List of nodes which should be reactivated for this system.
-* `nodes_list_remove_reserve` (List, optional)
+* `nodes_list_remove_reserve` (`List`, optional)
   List of nodes which should be removed from the System as reserve nodes.
-* `vlan_list` (List, optional)
+* `vlan_list` (`List`, optional)
   Network interfaces to use for database. Leave empty to use all possible network interfaces.
-* `volume_quota` (Int, optional)
+* `volume_quota` (`Int`, optional)
   Maximal size of volume in (GiB), the database tries to shrink it on start if required and possible.
-* `volume_restore_delay` (TextLine, optional)
+* `volume_restore_delay` (`TextLine`, optional)
   Move failed volume nodes to used reserve nodes automaticaly after given amount of time, or disable it with no value.
 
 ### `enlargeDatabase`
@@ -389,13 +390,13 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `comment` (TextLine, optional)
+* `comment` (`TextLine`, optional)
   Description of the driver, not required.
-* `jdbc_main` (TextLine)
+* `jdbc_main` (`TextLine`)
   Name of the main class.
-* `jdbc_name` (TextLine)
+* `jdbc_name` (`TextLine`)
   Name of the driver.
-* `jdbc_prefix` (TextLine)
+* `jdbc_prefix` (`TextLine`)
   Prefix of the JDBC name, must begin with "jdbc:" and ends with ":", like in "jdbc:mysql:".
 
 ### `getProperties`
@@ -425,15 +426,15 @@ Cleanup the logservice directory structure before deleting it.
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `default_interval` (TextLine, optional)
+* `default_interval` (`TextLine`, optional)
   This time interval is shown per default.
-* `description` (TextLine, optional)
+* `description` (`TextLine`, optional)
   Some description of this logservice.
-* `exaclusteros_services` (List, optional)
+* `exaclusteros_services` (`List`, optional)
   EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage'
-* `exasolution_systems` (List, optional)
+* `exasolution_systems` (`List`, optional)
   Database systems which should be visible at monitor.
-* `priority` (Choice)
+* `priority` (`Choice`)
   Specifies the lowest priority of messages that this logservice will show.
 
   Allowed values:
@@ -442,14 +443,14 @@ Function take a dictionary with parameters and return a list of fields, that was
   * Notice
   * Information
 
-* `remote_syslog_protocol` (Choice, optional)
+* `remote_syslog_protocol` (`Choice`, optional)
   Protocol to use to communicate with remote syslog server (TCP/UDP).
 
   Allowed values:
   * TCP
   * UDP
 
-* `remote_syslog_server` (TextLine, optional)
+* `remote_syslog_server` (`TextLine`, optional)
   Log messages periodically to the specified remote syslog server via TCP.
 
 ### `getProperties`
@@ -487,21 +488,21 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Create a new object type NodeDisk
 
 Function takes a dictionary with parameters, allowed keys are:
-* `devices` (List, optional)
+* `devices` (`List`, optional)
   The List of disk devices used on the node, use cluster's defaults if not given.
-* `disk_number` (Int, optional)
+* `disk_number` (`Int`, optional)
   Disk number in the name of disk, if not specified, then given automatically.
-* `diskenc` (Choice, optional)
+* `diskenc` (`Choice`, optional)
   Type of encryption to use on disks, use cluster's defaults if not given.
-* `disklabel` (TextLine, optional)
+* `disklabel` (`TextLine`, optional)
   Label for disk.
-* `diskraid` (Choice, optional)
+* `diskraid` (`Choice`, optional)
   The type of RAID to use on disks, use cluster's defaults if not given.
-* `disksize` (Int, optional)
+* `disksize` (`Int`, optional)
   The size of this disk in GiB or maximum if not entered.
-* `disktype` (Choice)
+* `disktype` (`Choice`)
   Type of storage for which this disk will be used.
-* `raidredundancy` (Int, optional)
+* `raidredundancy` (`Int`, optional)
   Number of copies of each datablock on RAID 10.
 
 ### `addStorageDisk`
@@ -548,51 +549,51 @@ Delete the subobject, defined by it's name and all settings
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `boot_interface` (Choice)
+* `boot_interface` (`Choice`)
   Interface to use for PXE boot.
-* `console_redirect` (Bool, optional)
+* `console_redirect` (`Bool`, optional)
   Redirect kernel output to serial console.
-* `cpu_scaling_governor` (Choice)
+* `cpu_scaling_governor` (`Choice`)
   Power scheme for Node CPU(s)
-* `devices` (List, optional)
+* `devices` (`List`, optional)
   The List of disk devices used on the node, use cluster's defaults if not given.
-* `diskenc` (Choice, optional)
+* `diskenc` (`Choice`, optional)
   Type of encryption to use on disks, use cluster's defaults if not given.
-* `diskraid` (Choice, optional)
+* `diskraid` (`Choice`, optional)
   The type of RAID to use on disks, use cluster's defaults if not given.
-* `external_number` (Int, optional)
+* `external_number` (`Int`, optional)
   The external node number, this number is added to network IP address.
-* `force_fsck` (Bool, optional)
+* `force_fsck` (`Bool`, optional)
   Force filesystem check on next boot of this node.
-* `force_no_fsck` (Bool, optional)
+* `force_no_fsck` (`Bool`, optional)
   Force no filesystem check on next boot of this node.
-* `hugepages` (Int, optional)
+* `hugepages` (`Int`, optional)
   Amount of hugepages in GiB to allocate for database usage on this node. This is recommended for nodes with RAM > 512 GiB. See manual for details.
-* `idstring` (TextLine, optional)
+* `idstring` (`TextLine`, optional)
   String to identificate this node, not required.
-* `ip_addr_ipmi` (TextLine, optional)
+* `ip_addr_ipmi` (`TextLine`, optional)
   Public Server Management Card IP address (only if group uses public addresses).
-* `ipmi_group` (Choice, optional)
+* `ipmi_group` (`Choice`, optional)
   Group that the IPMI card of this node belongs to (if any).
-* `mac_addr_eth0` (TextLine)
+* `mac_addr_eth0` (`TextLine`)
   The MAC address of the first LAN interface.
-* `mac_addr_eth1` (TextLine)
+* `mac_addr_eth1` (`TextLine`)
   The MAC address of the second LAN interface.
-* `mac_addr_ipmi` (TextLine, optional)
+* `mac_addr_ipmi` (`TextLine`, optional)
   The MAC address of the Server Management interface.
-* `public_network_list` (FixedDict)
+* `public_network_list` (`FixedDict`)
   Additional public network interfaces in node.
-* `raidredundancy` (Int, optional)
+* `raidredundancy` (`Int`, optional)
   Number of copies of each datablock on RAID 10.
-* `spool_disk` (Choice)
+* `spool_disk` (`Choice`)
   Disk for spool data of loading processes and other.
-* `to_install` (Bool, optional)
+* `to_install` (`Bool`, optional)
   Should this node to be installed next time when booted?
-* `to_wipe` (Bool, optional)
+* `to_wipe` (`Bool`, optional)
   Wipe disks of node on next boot. This process can take a lot of time
-* `use_4kib` (Bool, optional)
+* `use_4kib` (`Bool`, optional)
   Use 4 KiB alignment for hard disks to satisfy the 4 KiB sector size requirements.
-* `vlan_list` (FixedDict)
+* `vlan_list` (`FixedDict`)
   Additional private network interfaces in node.
 
 ### `fixChecksums`
@@ -705,13 +706,13 @@ cluster.activateNodes(nodes_list)
 Create a new object type BucketFS
 
 Function takes a dictionary with parameters, allowed keys are:
-* `description` (TextLine, optional)
+* `description` (`TextLine`, optional)
   Some description of this BucketFS.
-* `disk` (Choice)
+* `disk` (`Choice`)
   Disk for BucketFS data.
-* `http_port` (Int, optional)
+* `http_port` (`Int`, optional)
   Port for FS access.
-* `https_port` (Int, optional)
+* `https_port` (`Int`, optional)
   Port for SSL encrypted FS access.
 
 ### `addDatabase`
@@ -719,33 +720,33 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type Database
 
 Function takes a dictionary with parameters, allowed keys are:
-* `clients_port_number` (Int)
+* `clients_port_number` (`Int`)
   Port for client connections.
-* `data_disk` (Choice)
+* `data_disk` (`Choice`)
   Disk for runtime data (log files and data/tmp files for non-storage databases)
-* `data_volume` (Choice)
+* `data_volume` (`Choice`)
   Volume for EXASolution database data.
-* `database_name` (TextLine)
+* `database_name` (`TextLine`)
   The name of current database.
-* `database_version` (Choice)
+* `database_version` (`Choice`)
   Version of EXASolution executables.
-* `enable_auditing` (Bool, optional)
+* `enable_auditing` (`Bool`, optional)
   Enable auditing for database
-* `extra_params` (TextLine, optional)
+* `extra_params` (`TextLine`, optional)
   Extra parameters for startup of database.
-* `ldap_server` (TextLine, optional)
+* `ldap_server` (`TextLine`, optional)
   LDAP Server to use for remote database authentication, e.g. ldap[s]://192.168.16.10 . Multiple servers must be separated by commas.
-* `memory_usage` (Int)
+* `memory_usage` (`Int`)
   Amount of database memory (in GiB).
-* `nodes_list` (List)
+* `nodes_list` (`List`)
   List of active and reserve nodes for this database.
-* `nodes_number` (Int)
+* `nodes_number` (`Int`)
   Number of online nodes for this database.
-* `vlan_list` (List, optional)
+* `vlan_list` (`List`, optional)
   Network interfaces to use for database. Leave empty to use all possible network interfaces.
-* `volume_quota` (Int, optional)
+* `volume_quota` (`Int`, optional)
   Maximal size of volume in (GiB), the database tries to shrink it on start if required and possible.
-* `volume_restore_delay` (TextLine, optional)
+* `volume_restore_delay` (`TextLine`, optional)
   Move failed volume nodes to used reserve nodes automaticaly after given amount of time, or disable it with no value.
 
 ### `addJDBCDriver`
@@ -753,13 +754,13 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type JDBCDriver
 
 Function takes a dictionary with parameters, allowed keys are:
-* `comment` (TextLine, optional)
+* `comment` (`TextLine`, optional)
   Description of the driver, not required.
-* `jdbc_main` (TextLine)
+* `jdbc_main` (`TextLine`)
   Name of the main class.
-* `jdbc_name` (TextLine)
+* `jdbc_name` (`TextLine`)
   Name of the driver.
-* `jdbc_prefix` (TextLine)
+* `jdbc_prefix` (`TextLine`)
   Prefix of the JDBC name, must begin with "jdbc:" and ends with ":", like in "jdbc:mysql:".
 
 ### `addKeyStore`
@@ -767,13 +768,13 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type KeyStore
 
 Function takes a dictionary with parameters, allowed keys are:
-* `key_store_attributes` (TextLine)
+* `key_store_attributes` (`TextLine`)
   Attributes for key store, e.g. LIB=/usr/lunasa/lib/libCryptoKI.so;SLOT=1
-* `key_store_name` (TextLine)
+* `key_store_name` (`TextLine`)
   Name of key store in EXAoperation
-* `key_store_type` (Choice)
+* `key_store_type` (`Choice`)
   Type of key store.
-* `keylabel` (TextLine)
+* `keylabel` (`TextLine`)
   Label to identify the key in the security module.
 
 ### `addLogService`
@@ -781,15 +782,15 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type LogService
 
 Function takes a dictionary with parameters, allowed keys are:
-* `default_interval` (TextLine, optional)
+* `default_interval` (`TextLine`, optional)
   This time interval is shown per default.
-* `description` (TextLine, optional)
+* `description` (`TextLine`, optional)
   Some description of this logservice.
-* `exaclusteros_services` (List, optional)
+* `exaclusteros_services` (`List`, optional)
   EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage'
-* `exasolution_systems` (List, optional)
+* `exasolution_systems` (`List`, optional)
   Database systems which should be visible at monitor.
-* `priority` (Choice)
+* `priority` (`Choice`)
   Specifies the lowest priority of messages that this logservice will show.
 
   Allowed values:
@@ -798,14 +799,14 @@ Function takes a dictionary with parameters, allowed keys are:
   * Notice
   * Information
 
-* `remote_syslog_protocol` (Choice, optional)
+* `remote_syslog_protocol` (`Choice`, optional)
   Protocol to use to communicate with remote syslog server (TCP/UDP).
 
   Allowed values:
   * TCP
   * UDP
 
-* `remote_syslog_server` (TextLine, optional)
+* `remote_syslog_server` (`TextLine`, optional)
   Log messages periodically to the specified remote syslog server via TCP.
 
 ### `addNode`
@@ -813,55 +814,55 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type Node
 
 Function takes a dictionary with parameters, allowed keys are:
-* `boot_interface` (Choice)
+* `boot_interface` (`Choice`)
   Interface to use for PXE boot.
-* `console_redirect` (Bool, optional)
+* `console_redirect` (`Bool`, optional)
   Redirect kernel output to serial console.
-* `cpu_scaling_governor` (Choice)
+* `cpu_scaling_governor` (`Choice`)
   Power scheme for Node CPU(s)
-* `devices` (List, optional)
+* `devices` (`List`, optional)
   The List of disk devices used on the node, use cluster's defaults if not given.
-* `diskenc` (Choice, optional)
+* `diskenc` (`Choice`, optional)
   Type of encryption to use on disks, use cluster's defaults if not given.
-* `diskraid` (Choice, optional)
+* `diskraid` (`Choice`, optional)
   The type of RAID to use on disks, use cluster's defaults if not given.
-* `external_number` (Int, optional)
+* `external_number` (`Int`, optional)
   The external node number, this number is added to network IP address.
-* `force_fsck` (Bool, optional)
+* `force_fsck` (`Bool`, optional)
   Force filesystem check on next boot of this node.
-* `force_no_fsck` (Bool, optional)
+* `force_no_fsck` (`Bool`, optional)
   Force no filesystem check on next boot of this node.
-* `hugepages` (Int, optional)
+* `hugepages` (`Int`, optional)
   Amount of hugepages in GiB to allocate for database usage on this node. This is recommended for nodes with RAM > 512 GiB. See manual for details.
-* `idstring` (TextLine, optional)
+* `idstring` (`TextLine`, optional)
   String to identificate this node, not required.
-* `ip_addr_ipmi` (TextLine, optional)
+* `ip_addr_ipmi` (`TextLine`, optional)
   Public Server Management Card IP address (only if group uses public addresses).
-* `ipmi_group` (Choice, optional)
+* `ipmi_group` (`Choice`, optional)
   Group that the IPMI card of this node belongs to (if any).
-* `mac_addr_eth0` (TextLine)
+* `mac_addr_eth0` (`TextLine`)
   The MAC address of the first LAN interface.
-* `mac_addr_eth1` (TextLine)
+* `mac_addr_eth1` (`TextLine`)
   The MAC address of the second LAN interface.
-* `mac_addr_ipmi` (TextLine, optional)
+* `mac_addr_ipmi` (`TextLine`, optional)
   The MAC address of the Server Management interface.
-* `node_unique_id` (TextLine, optional)
+* `node_unique_id` (`TextLine`, optional)
   Number to identify node for this cluster instance.
-* `number` (Int)
+* `number` (`Int`)
   The node number in cluster, numbers 0-10 are reserved.
-* `public_network_list` (FixedDict)
+* `public_network_list` (`FixedDict`)
   Additional public network interfaces in node.
-* `raidredundancy` (Int, optional)
+* `raidredundancy` (`Int`, optional)
   Number of copies of each datablock on RAID 10.
-* `spool_disk` (Choice)
+* `spool_disk` (`Choice`)
   Disk for spool data of loading processes and other.
-* `to_install` (Bool, optional)
+* `to_install` (`Bool`, optional)
   Should this node to be installed next time when booted?
-* `to_wipe` (Bool, optional)
+* `to_wipe` (`Bool`, optional)
   Wipe disks of node on next boot. This process can take a lot of time
-* `use_4kib` (Bool, optional)
+* `use_4kib` (`Bool`, optional)
   Use 4 KiB alignment for hard disks to satisfy the 4 KiB sector size requirements.
-* `vlan_list` (FixedDict)
+* `vlan_list` (`FixedDict`)
   Additional private network interfaces in node.
 
 ### `addNodesFromXML`
@@ -875,13 +876,13 @@ Usage : cluster.addNodesFromXMl(xml_description, overwrite)
 Create a new object type PublicNetwork
 
 Function takes a dictionary with parameters, allowed keys are:
-* `bonding_network` (Choice, optional)
+* `bonding_network` (`Choice`, optional)
   Public network to bond this network with.
-* `mtu` (Choice)
+* `mtu` (`Choice`)
   MTU (maximum transfer unit) size to use for this VLAN.
-* `network_address` (TextLine, optional)
+* `network_address` (`TextLine`, optional)
   IP address of the network (e.g. 192.168.16.0/24).
-* `public_network_description` (TextLine)
+* `public_network_description` (`TextLine`)
   Description of this public network.
 
 ### `addRemoteVolume`
@@ -889,19 +890,19 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type RemoteVolume
 
 Function takes a dictionary with parameters, allowed keys are:
-* `allowed_users` (List)
+* `allowed_users` (`List`)
   List of users allowed to access volume.
-* `labels` (List, optional)
+* `labels` (`List`, optional)
   A List of labels to identify the volume.
-* `options` (TextLine, optional)
+* `options` (`TextLine`, optional)
   cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, or s3. Separated by comma. See manual for details.
-* `password` (Password, optional)
+* `password` (`Password`, optional)
   Password for remote archive.
-* `readonly_users` (List)
+* `readonly_users` (`List`)
   List of users allowed to read volume.
-* `url` (TextLine)
+* `url` (`TextLine`)
   Remote URL for archive volume, e.g. "ftp://192.168.2.1:12345" or "smb:////192.168.2.1/backupshare".
-* `user` (TextLine, optional)
+* `user` (`TextLine`, optional)
   Username for remote archive.
 
 ### `addRoute`
@@ -909,11 +910,11 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type Route
 
 Function takes a dictionary with parameters, allowed keys are:
-* `route_destination` (TextLine)
+* `route_destination` (`TextLine`)
   Destination for this route.
-* `route_gateway` (TextLine)
+* `route_gateway` (`TextLine`)
   Gateway for this route.
-* `route_type` (Choice)
+* `route_type` (`Choice`)
   Type of route.
 
   Allowed values:
@@ -925,17 +926,17 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type ScriptExtension
 
 Function takes a dictionary with parameters, allowed keys are:
-* `description` (TextLine, optional)
+* `description` (`TextLine`, optional)
   
-* `http_proxy` (TextLine, optional)
+* `http_proxy` (`TextLine`, optional)
   
-* `https_proxy` (TextLine, optional)
+* `https_proxy` (`TextLine`, optional)
   
-* `script_name` (TextLine)
+* `script_name` (`TextLine`)
   Name of package, e.g. 3to2, ggplot2
-* `script_type` (Choice)
+* `script_type` (`Choice`)
   
-* `url` (TextLine)
+* `url` (`TextLine`)
   URL of software repository, e.g. https://pypi.python.org/simple
 
 ### `addSrvMgmtGroup`
@@ -943,17 +944,17 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type SrvMgmtGroup
 
 Function takes a dictionary with parameters, allowed keys are:
-* `ipmi_description` (TextLine)
+* `ipmi_description` (`TextLine`)
   Name of this IPMI group.
-* `ipmi_password` (Password, optional)
+* `ipmi_password` (`Password`, optional)
   Password of the IPMI card.
-* `ipmi_password_multiline` (Text, optional)
+* `ipmi_password_multiline` (`Text`, optional)
   Multiline password of the IPMI card.
-* `ipmi_type` (Choice)
+* `ipmi_type` (`Choice`)
   Type of the IPMI card.
-* `ipmi_username` (TextLine)
+* `ipmi_username` (`TextLine`)
   Username for the IPMI card.
-* `public_ip_addresses` (Bool, optional)
+* `public_ip_addresses` (`Bool`, optional)
   Location of IPMI cards (private/public network).
 
 ### `addUser`
@@ -974,11 +975,11 @@ ldapFullDN       - Full DN string to authenticate user on LDAP Service
 Create a new object type VLAN
 
 Function takes a dictionary with parameters, allowed keys are:
-* `bonding_network` (Choice, optional)
+* `bonding_network` (`Choice`, optional)
   Private network to bond this network with.
-* `mtu` (Choice)
+* `mtu` (`Choice`)
   MTU (maximum transfer unit) size to use for this VLAN.
-* `vlan_description` (TextLine)
+* `vlan_description` (`TextLine`)
   Description of this private network.
 
 ### `applyRemoteSyslogSettings`
@@ -1026,21 +1027,21 @@ Check the posibility of delete volume.
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `coredump_deletion_time` (Int)
+* `coredump_deletion_time` (`Int`)
   Number of days after which coredumps will be deleted.
-* `disk_usage_error` (Int)
+* `disk_usage_error` (`Int`)
   Level upon which errors about disk space will be issued.
-* `disk_usage_warning` (Int)
+* `disk_usage_warning` (`Int`)
   Level upon which warnings about disk space will be issued.
-* `load_error` (Int)
+* `load_error` (`Int`)
   Level upon which errors about load will be issued.
-* `load_warning` (Int)
+* `load_warning` (`Int`)
   Level upon which warnings about load will be issued.
-* `sqllog_deletion_time` (Int)
+* `sqllog_deletion_time` (`Int`)
   Number of days after which SQL logs will be deleted.
-* `swap_error` (Int)
+* `swap_error` (`Int`)
   Level upon which errors about swap space will be issued.
-* `swap_warning` (Int)
+* `swap_warning` (`Int`)
   Level upon which warnings about swap space will be issued.
 
 ### `editNodeClusterDefaults`
@@ -1048,19 +1049,19 @@ Function take a dictionary with parameters and return a list of fields, that was
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `default_data_size` (Int)
+* `default_data_size` (`Int`)
   Default size of the Data disk in GiB.
-* `default_devices` (List)
+* `default_devices` (`List`)
   A list of disk devices used for disks as default.
-* `default_diskenc` (Choice)
+* `default_diskenc` (`Choice`)
   The default type of encryption to use for data disks.
-* `default_diskraid` (Choice)
+* `default_diskraid` (`Choice`)
   The default type of software RAID to use on disks.
-* `default_os_size` (Int)
+* `default_os_size` (`Int`)
   Default size of the OS disk in GiB.
-* `default_raidredundancy` (Int)
+* `default_raidredundancy` (`Int`)
   Default number of copies of each datablock on the RAID 10 arrays.
-* `default_swap_size` (Int)
+* `default_swap_size` (`Int`)
   Default size of the swap disk in GiB.
 
 ### `editNodeClusterLicense`
@@ -1068,23 +1069,23 @@ Function take a dictionary with parameters and return a list of fields, that was
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `license_comment` (TextLine)
+* `license_comment` (`TextLine`)
   Description of this license.
-* `license_companyname` (TextLine)
+* `license_companyname` (`TextLine`)
   Name of the company that owns license.
-* `license_distributor` (TextLine)
+* `license_distributor` (`TextLine`)
   Distributor of the given license.
-* `license_distributorid` (TextLine)
+* `license_distributorid` (`TextLine`)
   ID of the license distributor.
-* `license_expiration` (TextLine)
+* `license_expiration` (`TextLine`)
   License's expiration date in format yyyy-mm-dd
-* `license_idnumber` (TextLine)
+* `license_idnumber` (`TextLine`)
   Identification number of this license produced by EXASOL.
-* `license_maxdbmemory` (Int)
+* `license_maxdbmemory` (`Int`)
   Allowed memory size for all databases used in this cluster.
-* `license_serial_number` (Text)
+* `license_serial_number` (`Text`)
   Serial number of this license.
-* `license_validation_key` (Text)
+* `license_validation_key` (`Text`)
   Key created by EXASOL for license validation.
 
 ### `editNodeClusterNetwork`
@@ -1092,39 +1093,39 @@ Function take a dictionary with parameters and return a list of fields, that was
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `cluster_desc` (TextLine, optional)
+* `cluster_desc` (`TextLine`, optional)
   Cluster name, that is shown to user.
-* `default_gateway` (TextLine, optional)
+* `default_gateway` (`TextLine`, optional)
   Gateway IP address to external network.
-* `disable_broadcast` (Bool, optional)
+* `disable_broadcast` (`Bool`, optional)
   Disable usage of broadcasts, activate if network does not allow broadcasts.
-* `dns_server1` (TextLine, optional)
+* `dns_server1` (`TextLine`, optional)
   IP address of first DNS server.
-* `dns_server2` (TextLine, optional)
+* `dns_server2` (`TextLine`, optional)
   IP address of second DNS server.
-* `external_network` (TextLine)
+* `external_network` (`TextLine`)
   IP address of the network (e.g. 10.12.1.0/24).
-* `mtu_private` (Choice, optional)
+* `mtu_private` (`Choice`, optional)
   MTU (maximum transfer unit) size to use for private network.
-* `mtu_public` (Choice, optional)
+* `mtu_public` (`Choice`, optional)
   MTU (maximum transfer unit) size to use for public network.
-* `no_allow_http` (Bool, optional)
+* `no_allow_http` (`Bool`, optional)
   Disable HTTP for EXAoperation and HTTP/FTP access to archive volumes. Option will take effect after restart of EXAoperation.
-* `no_mac_check` (Bool, optional)
+* `no_mac_check` (`Bool`, optional)
   Disable check of the MAC addresses on booting of nodes, it also disables the reordering of network interfaces.
-* `ntp_key` (TextLine, optional)
+* `ntp_key` (`TextLine`, optional)
   Key for NTP server (consists of Key ID and key [space separated])
-* `ntp_server1` (TextLine, optional)
+* `ntp_server1` (`TextLine`, optional)
   IP address of the first NTP server.
-* `ntp_server2` (TextLine, optional)
+* `ntp_server2` (`TextLine`, optional)
   IP address of the second NTP server.
-* `ntp_server3` (TextLine, optional)
+* `ntp_server3` (`TextLine`, optional)
   IP address of the third NTP server.
-* `protected_node_mem` (Int)
+* `protected_node_mem` (`Int`)
   Memory that must not be used by EXASolution.
-* `search_domain` (TextLine, optional)
+* `search_domain` (`TextLine`, optional)
   Search domain to use with DNS servers.
-* `time_zone` (Choice)
+* `time_zone` (`Choice`)
   The time zone of cluster.
 
 ### `editNodeClusterPasswords`
@@ -1132,13 +1133,13 @@ Function take a dictionary with parameters and return a list of fields, that was
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `backup_password` (Password)
+* `backup_password` (`Password`)
   Password for the backup shares.
-* `node_disk_password` (Password)
+* `node_disk_password` (`Password`)
   Password of the disks. When changed, all nodes must be reintalled.
-* `password_keystore` (Choice, optional)
+* `password_keystore` (`Choice`, optional)
   The key store to use for encryption of passwords.
-* `vm_password` (Password)
+* `vm_password` (`Password`)
   Password for the VM shares.
 
 ### `editNodeClusterVersions`
@@ -1146,11 +1147,11 @@ Function take a dictionary with parameters and return a list of fields, that was
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `exacluster_version` (TextLine)
+* `exacluster_version` (`TextLine`)
   Installed EXAClusterOS version.
-* `exasolution_versions` (List)
+* `exasolution_versions` (`List`)
   List of Installed EXASolution versions.
-* `plugins` (List)
+* `plugins` (`List`)
   List of installed plugins.
 
 ### `editRemoteSyslogSettings`
@@ -1158,9 +1159,9 @@ Function take a dictionary with parameters and return a list of fields, that was
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `remote_syslog_ca_cert` (Text, optional)
+* `remote_syslog_ca_cert` (`Text`, optional)
   Text containing certificate of remote syslog server(s).
-* `remote_syslog_encrypted` (Bool, optional)
+* `remote_syslog_encrypted` (`Bool`, optional)
   Defines whether or not to use TLS for transmission of syslog messages.
 
 ### `editUser`
@@ -1553,13 +1554,13 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `key_store_attributes` (TextLine)
+* `key_store_attributes` (`TextLine`)
   Attributes for key store, e.g. LIB=/usr/lunasa/lib/libCryptoKI.so;SLOT=1
-* `key_store_name` (TextLine)
+* `key_store_name` (`TextLine`)
   Name of key store in EXAoperation
-* `key_store_type` (Choice)
+* `key_store_type` (`Choice`)
   Type of key store.
-* `keylabel` (TextLine)
+* `keylabel` (`TextLine`)
   Label to identify the key in the security module.
 
 ### `getProperties`
@@ -1595,13 +1596,13 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `bonding_network` (Choice, optional)
+* `bonding_network` (`Choice`, optional)
   Public network to bond this network with.
-* `mtu` (Choice)
+* `mtu` (`Choice`)
   MTU (maximum transfer unit) size to use for this VLAN.
-* `network_address` (TextLine, optional)
+* `network_address` (`TextLine`, optional)
   IP address of the network (e.g. 192.168.16.0/24).
-* `public_network_description` (TextLine)
+* `public_network_description` (`TextLine`)
   Description of this public network.
 
 ### `getProperties`
@@ -1625,11 +1626,11 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `route_destination` (TextLine)
+* `route_destination` (`TextLine`)
   Destination for this route.
-* `route_gateway` (TextLine)
+* `route_gateway` (`TextLine`)
   Gateway for this route.
-* `route_type` (Choice)
+* `route_type` (`Choice`)
   Type of route.
 
   Allowed values:
@@ -1655,17 +1656,17 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `ipmi_description` (TextLine)
+* `ipmi_description` (`TextLine`)
   Name of this IPMI group.
-* `ipmi_password` (Password, optional)
+* `ipmi_password` (`Password`, optional)
   Password of the IPMI card.
-* `ipmi_password_multiline` (Text, optional)
+* `ipmi_password_multiline` (`Text`, optional)
   Multiline password of the IPMI card.
-* `ipmi_type` (Choice)
+* `ipmi_type` (`Choice`)
   Type of the IPMI card.
-* `ipmi_username` (TextLine)
+* `ipmi_username` (`TextLine`)
   Username for the IPMI card.
-* `public_ip_addresses` (Bool, optional)
+* `public_ip_addresses` (`Bool`, optional)
   Location of IPMI cards (private/public network).
 
 ### `getProperties`
@@ -1693,11 +1694,11 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `bonding_network` (Choice, optional)
+* `bonding_network` (`Choice`, optional)
   Private network to bond this network with.
-* `mtu` (Choice)
+* `mtu` (`Choice`)
   MTU (maximum transfer unit) size to use for this VLAN.
-* `vlan_description` (TextLine)
+* `vlan_description` (`TextLine`)
   Description of this private network.
 
 ### `getProperties`
@@ -1727,17 +1728,17 @@ Returns True if new devices could be added to this disk.
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `devices` (List, optional)
+* `devices` (`List`, optional)
   The List of disk devices used on the node, use cluster's defaults if not given.
-* `diskenc` (Choice, optional)
+* `diskenc` (`Choice`, optional)
   Type of encryption to use on disks, use cluster's defaults if not given.
-* `disklabel` (TextLine, optional)
+* `disklabel` (`TextLine`, optional)
   Label for disk.
-* `diskraid` (Choice, optional)
+* `diskraid` (`Choice`, optional)
   The type of RAID to use on disks, use cluster's defaults if not given.
-* `disksize` (Int, optional)
+* `disksize` (`Int`, optional)
   The size of this disk in GiB or maximum if not entered.
-* `raidredundancy` (Int, optional)
+* `raidredundancy` (`Int`, optional)
   Number of copies of each datablock on RAID 10.
 
 ### `getProperties`
@@ -1753,19 +1754,19 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `allowed_users` (List)
+* `allowed_users` (`List`)
   List of users allowed to access volume.
-* `labels` (List, optional)
+* `labels` (`List`, optional)
   A List of labels to identify the volume.
-* `options` (TextLine, optional)
+* `options` (`TextLine`, optional)
   cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, or s3. Separated by comma. See manual for details.
-* `password` (Password, optional)
+* `password` (`Password`, optional)
   Password for remote archive.
-* `readonly_users` (List)
+* `readonly_users` (`List`)
   List of users allowed to read volume.
-* `url` (TextLine)
+* `url` (`TextLine`)
   Remote URL for archive volume, e.g. "ftp://192.168.2.1:12345" or "smb:////192.168.2.1/backupshare".
-* `user` (TextLine, optional)
+* `user` (`TextLine`, optional)
   Username for remote archive.
 
 ### `getProperties`
@@ -1803,17 +1804,17 @@ URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `description` (TextLine, optional)
+* `description` (`TextLine`, optional)
   
-* `http_proxy` (TextLine, optional)
+* `http_proxy` (`TextLine`, optional)
   
-* `https_proxy` (TextLine, optional)
+* `https_proxy` (`TextLine`, optional)
   
-* `script_name` (TextLine)
+* `script_name` (`TextLine`)
   Name of package, e.g. 3to2, ggplot2
-* `script_type` (Choice)
+* `script_type` (`Choice`)
   
-* `url` (TextLine)
+* `url` (`TextLine`)
   URL of software repository, e.g. https://pypi.python.org/simple
 
 ### `getInstallationLog`
@@ -1883,27 +1884,27 @@ URL: `https://<user>:<pass>@<cluster_node>/cluster1/storage/`
 Create a new object type StorageVolume
 
 Function takes a dictionary with parameters, allowed keys are:
-* `allowed_users` (List)
+* `allowed_users` (`List`)
   List of users, who are allowed to access this volume.
-* `block_size` (Int, optional)
+* `block_size` (`Int`, optional)
   Size of volume blocks in volume in KiB.
-* `hdd_type` (Choice)
+* `hdd_type` (`Choice`)
   Disk to create volume on.
-* `labels` (List, optional)
+* `labels` (`List`, optional)
   List of labels to identify the volume.
-* `masternodes` (Int)
+* `masternodes` (`Int`)
   Number of master nodes for volume; must match to number of DB nodes in case of data volume.
-* `nodes_list` (List)
+* `nodes_list` (`List`)
   List of nodes to use as volume storage.
-* `priority` (Int, optional)
+* `priority` (`Int`, optional)
   Priority of volume between 1 and 20, higher number means higher priority. Default value is 10.
-* `readonly_users` (List, optional)
+* `readonly_users` (`List`, optional)
   List of users, who are allowed to read this volume.
-* `redundancy` (Int)
+* `redundancy` (`Int`)
   Number of redundancy segments per volume part.
-* `size` (Int)
+* `size` (`Int`)
   Size of volume in GiB.
-* `volume_type` (Choice)
+* `volume_type` (`Choice`)
   Type of data stored on this volume.
 
   Allowed values:
@@ -1923,7 +1924,7 @@ Delete Storage metadata from all online nodes.
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `vlan_list` (List)
+* `vlan_list` (`List`)
   Network interfaces to use for storage. Leave empty to use the first network interface.
 
 ### `getArchiveFilesystems`
@@ -2147,19 +2148,19 @@ Check permissions to access this volume.
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `add_master_nodes` (Int, optional)
+* `add_master_nodes` (`Int`, optional)
   Number of master nodes that should be added.
-* `add_nodes_list` (List, optional)
+* `add_nodes_list` (`List`, optional)
   List of nodes that should be added to volume.
-* `allowed_users` (List)
+* `allowed_users` (`List`)
   List of users, who are allowed to access this volume.
-* `labels` (List, optional)
+* `labels` (`List`, optional)
   List of labels to identify the volume.
-* `priority` (Int, optional)
+* `priority` (`Int`, optional)
   Priority of volume between 1 and 20, higher number means higher priority. Default value is 10.
-* `readonly_users` (List, optional)
+* `readonly_users` (`List`, optional)
   List of users, who are allowed to read this volume.
-* `redundancy` (Int)
+* `redundancy` (`Int`)
   Number of redundancy segments per volume part.
 
 ### `formatFilesystem`
