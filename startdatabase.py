@@ -24,17 +24,27 @@ if len(volumes) == 0:
                                            'redundancy': 1,
                                            'size': 8,
                                            'volume_type': 'Data'})
-    print "Create volume:", ret
+    print "Create data volume:", ret
+    ret = server.storage.addStorageVolume({'allowed_users': users,
+                                           'hdd_type': sdisk,
+                                           'masternodes': len(nodes),
+                                           'nodes_list': nodes, 
+                                           'redundancy': 1,
+                                           'size': 8,
+                                           'volume_type': 'Archive'})
+    print "Create archive volume:", ret
+    volumes = server.getListValues('Volumes')
 else: print "Volumes already created:", volumes
 
 if 'db1' not in server.getListValues('Databases'):
-    server.addDatabase({'clients_port_number': 2568,
-                        'data_disk': 'd02_data',
-                        'database_name': 'db1',
-                        'database_version': dbver,
-                        'memory_usage': 4,
-                        'nodes_list': nodes,
-                        'nodes_number': len(nodes)})
+    ret = server.addDatabase({'clients_port_number': 8563,
+                              'data_disk': 'd02_data',
+                              'data_volume': volumes[0],
+                              'database_name': 'db1',
+                              'database_version': dbver,
+                              'memory_usage': 4,
+                              'nodes_list': nodes,
+                              'nodes_number': len(nodes)})
     print "Add database:", ret
 else: print "Database already exists"
 
