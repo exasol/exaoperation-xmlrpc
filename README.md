@@ -1,6 +1,6 @@
-# EXASOL XMLRPC API
+# EXAoperation XMLRPC API
 
-This project contains Python script examples how to automate the administration of EXASOL cluster using its XMLRPC API. Additionally, you'll find a complete description for all API methods in file [EXAoperation_XMLRPC.md](EXAoperation_XMLRPC.md).
+This project contains Python script examples how to automate the administration of EXASOL cluster using its XMLRPC API instead of EXAoperation's web interface. Additionally, you'll find a complete description for all API methods in file [EXAoperation_XMLRPC.md](EXAoperation_XMLRPC.md).
 
 ## Import
 
