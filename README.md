@@ -1,5 +1,8 @@
 # EXAoperation XMLRPC API
 
+###### Please note that this is an open source project which is *not officially supported* by EXASOL. We will try to help you as much as possible, but can't guarantee anything since this is not an official EXASOL product.
+
+
 This project contains Python script examples how to automate the administration of EXASOL cluster using its XMLRPC API instead of EXAoperation's web interface. Additionally, you'll find a complete description for all API methods in file [EXAoperation_XMLRPC.md](EXAoperation_XMLRPC.md).
 
 ## Import
