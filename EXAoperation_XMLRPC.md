@@ -27,7 +27,6 @@ Parameters:
   * `Disks`
   * `EXASolutionVersions`
   * `EncrTypes`
-  * `ExapScriptTypes`
   * `KeyStoreTypes`
   * `KeyStore`
   * `Mtu`
@@ -75,13 +74,13 @@ Create a new object type BucketFSBucket
 
 Function takes a dictionary with parameters, allowed keys are:
 * `bucket_name` (`TextLine`)
-  The name of bucket.
+  The name of the bucket.
 * `description` (`TextLine`, optional)
   Some description of this BucketFS Bucket.
 * `public_bucket` (`Bool`)
   Public buckets require no password for reading.
 * `read_password` (`Password`)
-  Password readonly access.
+  Password for readonly access.
 * `write_password` (`Password`)
   Password for write access.
 
@@ -115,6 +114,10 @@ Function returns a dictionary that describes an object. Keys are:
 * `https_port`
   Port for SSL encrypted FS access.
 
+### Method `getSize`
+
+Return the size used by this whole bucket on disk
+
 ## Service `BucketFSBucket`
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
@@ -125,19 +128,23 @@ Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
 * `bucket_name` (`TextLine`)
-  The name of bucket.
+  The name of the bucket.
 * `description` (`TextLine`, optional)
   Some description of this BucketFS Bucket.
 * `public_bucket` (`Bool`)
   Public buckets require no password for reading.
 * `read_password` (`Password`)
-  Password readonly access.
+  Password for readonly access.
 * `write_password` (`Password`)
   Password for write access.
 
 ### Method `getProperties`
 
 This object has no properties.
+
+### Method `getSize`
+
+Get hdd size used by this bucket
 
 ## Service `Database`
 
@@ -158,9 +165,12 @@ Abort shrink operation of database.
 Start backup to given storage volume with given level and expiration time.
 
 Parameters:
-  volume - name of volume where to write backup
-  level  - backup level
-  expire - expire time for backup
+* `volume`
+  Name of volume where to write backup
+* `level`
+  Backup level
+* `expire`
+  Expire time for backup
 
 ### Method `backupInfo`
 
@@ -170,23 +180,35 @@ Return information for a backup.
 
 Change expiration time of a backup.
 
+Usage: `database.changeBackupExpiration(volume, backup_files, expire_time)`
+Parameters:
+* `volume`
+  Volume ID.
+* `backup_files`
+  Prefix of the backup files, like `exa_db1/id_1/level_0`.
+* `expire_time`
+  Timestamp in seconds since the Epoch on which the backup should expire.
+
 ### Method `createDatabase`
 
 Create a fresh database, must not exist jet.
 
 ### Method `deleteBackups`
 
-Delete given backups
+Delete given backups.
 
-Usage: database.deleteBackups(backup_list)
+Usage: `database.deleteBackups(backup_list)`
 Parameters: 
-  backup_list - a list of backups, Can be recieved with database.backupList()
+* `backup_list`
+  A list of backup IDs as returned by `getBackups()` in key `id`.
 
 ### Method `deleteUnusableBackups`
 
 Delete all unusable backups for current database.
 
-Usage: database.deleteUnusableBackups()
+Usage: `database.deleteUnusableBackups()`
+* `use_all_databases`
+  If True, delete unusable backups from all databases, default False.
 
 ### Method `editDatabase`
 
@@ -242,10 +264,6 @@ Return whether the database exists or not.
 
 Force shutdown of database, must be running.
 
-### Method `getBackgroundRestoreState`
-
-Returns current background restore state.
-
 ### Method `getBackupSchedule`
 
 Return a list of scheduled backups
@@ -254,10 +272,10 @@ Return a list of scheduled backups
 
 Return a list of available backups for this database.
 
-Usage: database.getBackups(show_all_databases, show_expired_backups)
+Usage: `database.getBackups(show_all_databases = False, show_expired_backups = True)`
 Parameters:
-  show_all_databases - show backups not for only this database
-  show_expired_backups - not exclude expired backups from list
+  `show_all_databases` - show backups not for only this database
+  `show_expired_backups` - not exclude expired backups from list
 
 ### Method `getCurrentDatabaseSize`
 
@@ -270,14 +288,6 @@ Get current reasons for not starting a database.
 ### Method `getDatabaseVersion`
 
 Return current database version.
-
-### Method `getDatabaseVolumeNodesMatch`
-
-Return information about database nodes match to volume nodes.
-
-### Method `getDatabaseVolumeOfflineSegments`
-
-Return number of offline data volume segments.
 
 ### Method `getNextSchedules`
 
@@ -341,10 +351,12 @@ Restart database which must be running.
 
 Start restore from given backup ID and restore type.
 
-  Usage: database.restoreDatabase(backup_id, restore_type)
-  Parameters: 
-    backup_name - could be obtained by getBackups(), field 'id'. Must have three valus separated by space.
-    restore_type - type of restore. Must be one of following - {'blocking'|'nonblocking'|'virtual access'}
+Usage: `database.restoreDatabase(backup_id, restore_type)`
+Parameters: 
+* `backup_name`
+  Could be obtained by getBackups(), field 'id'. Must have three valus separated by space.
+* `restore_type`
+  Type of restore. Must be one of following - {'blocking'|'nonblocking'|'virtual access'}
 
 ### Method `runningDatabase`
 
@@ -417,10 +429,6 @@ Upload given file.
 
 URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
 
-### Method `cleanupLogservice`
-
-Cleanup the logservice directory structure before deleting it.
-
 ### Method `editLogService`
 
 Edits object.
@@ -430,9 +438,9 @@ Function take a dictionary with parameters and return a list of fields, that was
   This time interval is shown per default.
 * `description` (`TextLine`, optional)
   Some description of this logservice.
-* `exaclusteros_services` (`List`, optional)
+* `exaclusteros_services` (`List`)
   EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage'
-* `exasolution_systems` (`List`, optional)
+* `exasolution_systems` (`List`)
   Database systems which should be visible at monitor.
 * `priority` (`Choice`)
   Specifies the lowest priority of messages that this logservice will show.
@@ -470,14 +478,6 @@ Function returns a dictionary that describes an object. Keys are:
   Protocol to use to communicate with remote syslog server (TCP/UDP).
 * `remote_syslog_server`
   Log messages periodically to the specified remote syslog server via TCP.
-
-### Method `logFetchEntries`
-
-Fetch log entries from the Logd service.
-    Parameters:
-    start, halt - tuples (yyyy, mm, dd, hh, mi, ss, msec)
-    errlevel    - lowest message level to fetch, possible values: ['Information', 'Notice', 'Warning', 'Error']
-    priority    - tag
 
 ## Service `Node`
 
@@ -538,7 +538,7 @@ Parameters: number
 
 ### Method `deleteDisks`
 
-Remove disk with given name.
+Remove disk with given list of names.
 
 ### Method `deleteSubObject`
 
@@ -549,11 +549,11 @@ Delete the subobject, defined by it's name and all settings
 Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `boot_interface` (`Choice`)
+* `boot_interface` (`Choice`, optional)
   Interface to use for PXE boot.
 * `console_redirect` (`Bool`, optional)
   Redirect kernel output to serial console.
-* `cpu_scaling_governor` (`Choice`)
+* `cpu_scaling_governor` (`Choice`, optional)
   Power scheme for Node CPU(s)
 * `devices` (`List`, optional)
   The List of disk devices used on the node, use cluster's defaults if not given.
@@ -581,7 +581,7 @@ Function take a dictionary with parameters and return a list of fields, that was
   The MAC address of the second LAN interface.
 * `mac_addr_ipmi` (`TextLine`, optional)
   The MAC address of the Server Management interface.
-* `public_network_list` (`FixedDict`)
+* `public_network_list` (`FixedDict`, optional)
   Additional public network interfaces in node.
 * `raidredundancy` (`Int`, optional)
   Number of copies of each datablock on RAID 10.
@@ -593,7 +593,7 @@ Function take a dictionary with parameters and return a list of fields, that was
   Wipe disks of node on next boot. This process can take a lot of time
 * `use_4kib` (`Bool`, optional)
   Use 4 KiB alignment for hard disks to satisfy the 4 KiB sector size requirements.
-* `vlan_list` (`FixedDict`)
+* `vlan_list` (`FixedDict`, optional)
   Additional private network interfaces in node.
 
 ### Method `fixChecksums`
@@ -610,7 +610,12 @@ Return information about devices.
 
 ### Method `getDiskInfo`
 
-Return info about disk
+Return info about disk.
+
+Usage: `storage.getDiskInfo(diskname)`
+Parameters:
+* `diskname`
+  Name of the disk to show, like `d00_os`
 
 ### Method `getNodeInfo`
 
@@ -619,10 +624,6 @@ Return node information.
 ### Method `getProperties`
 
 This object has no properties.
-
-### Method `getSrvMgmtConsoleParameters`
-
-Return info about parameters necessary for Server Management console
 
 ### Method `nodeRunning`
 
@@ -786,9 +787,9 @@ Function takes a dictionary with parameters, allowed keys are:
   This time interval is shown per default.
 * `description` (`TextLine`, optional)
   Some description of this logservice.
-* `exaclusteros_services` (`List`, optional)
+* `exaclusteros_services` (`List`)
   EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage'
-* `exasolution_systems` (`List`, optional)
+* `exasolution_systems` (`List`)
   Database systems which should be visible at monitor.
 * `priority` (`Choice`)
   Specifies the lowest priority of messages that this logservice will show.
@@ -814,11 +815,11 @@ Function takes a dictionary with parameters, allowed keys are:
 Create a new object type Node
 
 Function takes a dictionary with parameters, allowed keys are:
-* `boot_interface` (`Choice`)
+* `boot_interface` (`Choice`, optional)
   Interface to use for PXE boot.
 * `console_redirect` (`Bool`, optional)
   Redirect kernel output to serial console.
-* `cpu_scaling_governor` (`Choice`)
+* `cpu_scaling_governor` (`Choice`, optional)
   Power scheme for Node CPU(s)
 * `devices` (`List`, optional)
   The List of disk devices used on the node, use cluster's defaults if not given.
@@ -850,7 +851,7 @@ Function takes a dictionary with parameters, allowed keys are:
   Number to identify node for this cluster instance.
 * `number` (`Int`)
   The node number in cluster, numbers 0-10 are reserved.
-* `public_network_list` (`FixedDict`)
+* `public_network_list` (`FixedDict`, optional)
   Additional public network interfaces in node.
 * `raidredundancy` (`Int`, optional)
   Number of copies of each datablock on RAID 10.
@@ -862,7 +863,7 @@ Function takes a dictionary with parameters, allowed keys are:
   Wipe disks of node on next boot. This process can take a lot of time
 * `use_4kib` (`Bool`, optional)
   Use 4 KiB alignment for hard disks to satisfy the 4 KiB sector size requirements.
-* `vlan_list` (`FixedDict`)
+* `vlan_list` (`FixedDict`, optional)
   Additional private network interfaces in node.
 
 ### Method `addNodesFromXML`
@@ -895,7 +896,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `labels` (`List`, optional)
   A List of labels to identify the volume.
 * `options` (`TextLine`, optional)
-  cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, or s3. Separated by comma. See manual for details.
+  cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, delegation_token, or s3. Separated by comma. See manual for details.
 * `password` (`Password`, optional)
   Password for remote archive.
 * `readonly_users` (`List`)
@@ -920,24 +921,6 @@ Function takes a dictionary with parameters, allowed keys are:
   Allowed values:
   * Network
   * Host
-
-### Method `addScriptExtension`
-
-Create a new object type ScriptExtension
-
-Function takes a dictionary with parameters, allowed keys are:
-* `description` (`TextLine`, optional)
-  
-* `http_proxy` (`TextLine`, optional)
-  
-* `https_proxy` (`TextLine`, optional)
-  
-* `script_name` (`TextLine`)
-  Name of package, e.g. 3to2, ggplot2
-* `script_type` (`Choice`)
-  
-* `url` (`TextLine`)
-  URL of software repository, e.g. https://pypi.python.org/simple
 
 ### Method `addSrvMgmtGroup`
 
@@ -982,29 +965,25 @@ Function takes a dictionary with parameters, allowed keys are:
 * `vlan_description` (`TextLine`)
   Description of this private network.
 
-### Method `applyRemoteSyslogSettings`
-
-Apply remote syslog settings.
-
 ### Method `clusterDesc`
 
 Return cluster description
-
-### Method `deleteDatabaseCheck`
-
-Check the posibility of delete database.
 
 ### Method `deleteLogs`
 
 Delete logs/coredumps.
 
-### Method `deleteNodeCheck`
+Usage: `object.deleteLogs(delete_coredumps, db_name_list, start_date, stop_date)`
 
-Check the posibility of delete node.
-
-### Method `deleteNodeDiskCheck`
-
-Check the posibility of delete node disk.
+Parameters:
+* `delete_coredumps`
+  If True, delete also the coredumps.
+* `db_same_list`
+  List of DBs, which logs should be deleted.
+* `start_date`
+  From which starting date the logs should be deleted.
+* `stop_date`
+  Up to which date, logs should be deleted.
 
 ### Method `deleteSubObject`
 
@@ -1017,10 +996,6 @@ Delete a user by given User ID
 ### Method `deleteUserByLogin`
 
 Delete a user by a given login
-
-### Method `deleteVolumeCheck`
-
-Check the posibility of delete volume.
 
 ### Method `editMonitorThresholds`
 
@@ -1064,30 +1039,6 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `default_swap_size` (`Int`)
   Default size of the swap disk in GiB.
 
-### Method `editNodeClusterLicense`
-
-Edits object.
-
-Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `license_comment` (`TextLine`)
-  Description of this license.
-* `license_companyname` (`TextLine`)
-  Name of the company that owns license.
-* `license_distributor` (`TextLine`)
-  Distributor of the given license.
-* `license_distributorid` (`TextLine`)
-  ID of the license distributor.
-* `license_expiration` (`TextLine`)
-  License's expiration date in format yyyy-mm-dd
-* `license_idnumber` (`TextLine`)
-  Identification number of this license produced by EXASOL.
-* `license_maxdbmemory` (`Int`)
-  Allowed memory size for all databases used in this cluster.
-* `license_serial_number` (`Text`)
-  Serial number of this license.
-* `license_validation_key` (`Text`)
-  Key created by EXASOL for license validation.
-
 ### Method `editNodeClusterNetwork`
 
 Edits object.
@@ -1109,6 +1060,8 @@ Function take a dictionary with parameters and return a list of fields, that was
   MTU (maximum transfer unit) size to use for private network.
 * `mtu_public` (`Choice`, optional)
   MTU (maximum transfer unit) size to use for public network.
+* `no_allow_backup_download` (`Bool`, optional)
+  Disable access to archive volumes completely. Option will take effect after restart of EXAoperation.
 * `no_allow_http` (`Bool`, optional)
   Disable HTTP for EXAoperation and HTTP/FTP access to archive volumes. Option will take effect after restart of EXAoperation.
 * `no_mac_check` (`Bool`, optional)
@@ -1128,32 +1081,6 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `time_zone` (`Choice`)
   The time zone of cluster.
 
-### Method `editNodeClusterPasswords`
-
-Edits object.
-
-Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `backup_password` (`Password`)
-  Password for the backup shares.
-* `node_disk_password` (`Password`)
-  Password of the disks. When changed, all nodes must be reintalled.
-* `password_keystore` (`Choice`, optional)
-  The key store to use for encryption of passwords.
-* `vm_password` (`Password`)
-  Password for the VM shares.
-
-### Method `editNodeClusterVersions`
-
-Edits object.
-
-Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `exacluster_version` (`TextLine`)
-  Installed EXAClusterOS version.
-* `exasolution_versions` (`List`)
-  List of Installed EXASolution versions.
-* `plugins` (`List`)
-  List of installed plugins.
-
 ### Method `editRemoteSyslogSettings`
 
 Edits object.
@@ -1166,8 +1093,15 @@ Function take a dictionary with parameters and return a list of fields, that was
 
 ### Method `editUser`
 
-Edit an EXAoperation user
-Usage: cluster.editUser(user_login, user_data)
+Edit an EXAoperation user.
+
+Usage: `cluster.editUser(user_login, user_data)`
+
+Parameters:
+* `user_login`
+  Login name of the user to edit.
+* `user_data`
+  A dictionary wih following keys: `user_login`, `password`, `user_title`, `ldapServer`, `ldapFullDN`
 
 ### Method `getAllArchiveVolumes`
 
@@ -1208,10 +1142,6 @@ Return names of all public networks (sorted).
 Return a list of all routes.
 
 Usage: cluster.getAllRoutes()
-
-### Method `getAllScriptExtensions`
-
-Return a list of all installed UDF Libraries
 
 ### Method `getAllSrvMgmtCardGroups`
 
@@ -1257,10 +1187,6 @@ Get deletion time of coredumps.
 
 Returns the license Server number.
 
-### Method `getDefaultParameters`
-
-Get list of current license default parameters.
-
 ### Method `getDomainName`
 
 Returns the domain name.
@@ -1291,11 +1217,11 @@ Return list of ids of all installed JDBC Drivers
 
 ### Method `getKeyStoreByName`
 
-Return a Password storage defined by name
+Return a Password storage defined by name.
 
 ### Method `getKeyStoreByObjName`
 
-Return a Password storage defined by name
+Return a Password storage defined by key store object name
 
 ### Method `getLegalInfo`
 
@@ -1347,23 +1273,29 @@ Return real public network name from descriptive name or None.
 
 ### Method `getPublicNetworkDescription`
 
-Return real public network name from descriptive name or None.
+Return public network descriptive name from real name or None.
 
 ### Method `getRolesForObject`
 
-Return a list of users with grants
+Return a list of users with grants.
     
-Usage: cluster.getRolesForObject(object_name, user_id)
+Usage: `cluster.getRolesForObject(object_name, user_id)`
 Parameters:
-  object_name - name of an object in the cluster
-  user_id     - id of a user (can be retrieved from cluster.getAllUsers())
-                If user_id is an empty string, then will be returned the list 
-                of all granted roles for this object.
+* `object_name`
+  Name of an object in the cluster
+* `user_id`
+  Id of a user (can be retrieved from cluster.getAllUsers()) If
+  user_id is an empty string, then will be returned the list of all
+  granted roles for this object.
+
 The return value is a list of dictionaries. The keys are:
-  user     - user id (as returned by cluster.getAllUsers() or used in cluster.getUserById() )
-  role     - the role given to a user
-  default  - False, if the role is granted directly to this object
-             True , if the role is derived from its parent object
+* `user`
+  User id (as returned by cluster.getAllUsers() or used in cluster.getUserById() )
+* `role`
+  The role given to a user
+* `default`
+  False, if the role is granted directly to this object.
+  True, if the role is derived from its parent object.
 
 ### Method `getServiceStates`
 
@@ -1431,6 +1363,10 @@ Parameters:
   user_id     - id of a user (can be retrieved from cluster.getAllUsers() )
   role_name   - one of [u'User', u'Supervisor', u'Administrator', u'Master']
 
+### Method `haltLicenseServer`
+
+Shutdown license server.
+
 ### Method `havePlugins`
 
 Return True if plugins are installed
@@ -1446,10 +1382,6 @@ Parameters: license_data - license data as xml-formatted string
 
 Return True if EXAoperation should be restarted
 
-### Method `ntpServersConfigured`
-
-Return true if any NTP server is configured.
-
 ### Method `numberOfAvailableNodes`
 
 Return number of nodes a user can add or 1024*1024 (unlimited).
@@ -1461,10 +1393,6 @@ Restart license server.
 ### Method `reinitEXAoperationPriorities`
 
 Set priority of EXAoperation nodes.
-
-### Method `removeAllScripts`
-
-Remove all installed UDF Libraries.
 
 ### Method `removeDatabase`
 
@@ -1503,6 +1431,12 @@ Restart license server.
 
 Save changes of bucketfs properties to file.
 
+### Method `setClusterTime`
+
+Set cluster time to specified time.
+    
+Usage: cluster.setClusterTime('2017-01-01 00:00:00')
+
 ### Method `setDefaultRole`
 
 Unset all granted roles and set a default role for user.
@@ -1536,6 +1470,16 @@ Synchronize license server with NTP servers.
 ### Method `uploadSoftware`
 
 Upload a new database version.
+
+### Method `uploadTlsFiles`
+
+Upload and update TLS files(cert & private key) 
+
+Usage:  cluster.uploadTlsFiles(cert, private_key)
+        To use the new cert/key you have to restart ExaOperation
+
+Parameter: cert[string] - The new certificate encoded as PEM
+Parameter: private_key[string] - The new private key encoded as PEM
 
 ## Service `NodeClusterAfterAdd`
 
@@ -1759,7 +1703,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `labels` (`List`, optional)
   A List of labels to identify the volume.
 * `options` (`TextLine`, optional)
-  cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, or s3. Separated by comma. See manual for details.
+  cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, delegation_token, or s3. Separated by comma. See manual for details.
 * `password` (`Password`, optional)
   Password for remote archive.
 * `readonly_users` (`List`)
@@ -1777,7 +1721,7 @@ Function returns a dictionary that describes an object. Keys are:
 * `labels`
   A List of labels to identify the volume.
 * `options`
-  cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, or s3. Separated by comma. See manual for details.
+  cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, delegation_token, or s3. Separated by comma. See manual for details.
 * `password`
   Password for remote archive.
 * `readonly_users`
@@ -1794,56 +1738,6 @@ Return 'virtual' volume ID of remote archive volume.
 ### Method `state`
 
 Return connectivity state of remote archive volume.
-
-## Service `ScriptExtension`
-
-URL: `https://<user>:<pass>@<license_server>/cluster1/<object_name>`
-
-### Method `editEXAPScript`
-
-Edits object.
-
-Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
-* `description` (`TextLine`, optional)
-  
-* `http_proxy` (`TextLine`, optional)
-  
-* `https_proxy` (`TextLine`, optional)
-  
-* `script_name` (`TextLine`)
-  Name of package, e.g. 3to2, ggplot2
-* `script_type` (`Choice`)
-  
-* `url` (`TextLine`)
-  URL of software repository, e.g. https://pypi.python.org/simple
-
-### Method `getInstallationLog`
-
-Get installation log of script.
-
-### Method `getProperties`
-
-Function returns a dictionary that describes an object. Keys are:
-* `description`
-  
-* `http_proxy`
-  
-* `https_proxy`
-  
-* `script_name`
-  Name of package, e.g. 3to2, ggplot2
-* `script_type`
-  
-* `url`
-  URL of software repository, e.g. https://pypi.python.org/simple
-
-### Method `getStatus`
-
-Get installation status of script.
-
-### Method `installNow`
-
-Install script now.
 
 ## Service `SetupCommand`
 
@@ -1885,7 +1779,7 @@ Create a new object type StorageVolume
 
 Function takes a dictionary with parameters, allowed keys are:
 * `allowed_users` (`List`)
-  List of users, who are allowed to access this volume.
+  List of users, who are allowed to access this volume, in XMLRPC a list of user IDs as returned by `getUserByName`.
 * `block_size` (`Int`, optional)
   Size of volume blocks in volume in KiB.
 * `hdd_type` (`Choice`)
@@ -1899,7 +1793,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `priority` (`Int`, optional)
   Priority of volume between 1 and 20, higher number means higher priority. Default value is 10.
 * `readonly_users` (`List`, optional)
-  List of users, who are allowed to read this volume.
+  List of users, who are allowed to read this volume, in XMLRPC a list of user IDs, as returned by `getUserByName`.
 * `redundancy` (`Int`)
   Number of redundancy segments per volume part.
 * `size` (`Int`)
@@ -1932,7 +1826,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 Return dictionary with permitted for a user remote and archive volumes.
 The returned values are tupples (<OBJECT_TYPE>, <ID>, <PERMISSIONS>)
 
-Usage: storage.getArchiveFileSystems()
+Usage: `storage.getArchiveFileSystems()`
 
 ### Method `getProperties`
 
@@ -1948,15 +1842,16 @@ Returns information about storage.
 
 Returns information about volume.
     
-Usage: storage.getVolumeInfo(vid)
+Usage: `storage.getVolumeInfo(vid)`
 Parameters:
-  vid - volume id as returned by getVolumeList().
+* `vid`
+  Volume id as returned by `getVolumeList()`.
 
 ### Method `getVolumeList`
 
 Return a dictionary with description of volumes in EXAStorage.
 
-Usage: storage.getVolumeList()
+Usage: `storage.getVolumeList()`
 
 ### Method `nodesInformation`
 
@@ -1984,7 +1879,12 @@ Return a boolean, showing if storage service has quorum.
 
 ### Method `volumeRemove`
 
-Remove volume
+Remove volume.
+
+Usage: `storage.volumeRemove(vname)`
+Parameters:
+* `vname`
+  Name of the as returned by `getVolumeList()`.
 
 ## Service `StorageNode`
 
@@ -2151,15 +2051,15 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `add_master_nodes` (`Int`, optional)
   Number of master nodes that should be added.
 * `add_nodes_list` (`List`, optional)
-  List of nodes that should be added to volume.
+  List of nodes that should be added to volume, a node can not be added, if it is already in use by this volume.
 * `allowed_users` (`List`)
-  List of users, who are allowed to access this volume.
+  List of users, who are allowed to access this volume, in XMLRPC a list of user IDs as returned by `getUserByName`.
 * `labels` (`List`, optional)
   List of labels to identify the volume.
 * `priority` (`Int`, optional)
   Priority of volume between 1 and 20, higher number means higher priority. Default value is 10.
 * `readonly_users` (`List`, optional)
-  List of users, who are allowed to read this volume.
+  List of users, who are allowed to read this volume, in XMLRPC a list of user IDs, as returned by `getUserByName`.
 * `redundancy` (`Int`)
   Number of redundancy segments per volume part.
 
@@ -2200,6 +2100,13 @@ Set file expiration time, 'exptime' argument is number of seconds since the Epoc
 ### Method `setIoState`
 
 Set IO state for Volume application or internal IO.
+
+Usage: `storage.setIoState(app_io, int_io)`
+Paramaters:
+* `app_io`
+  Boolean, enables or disables IO with applications
+* `int_io`
+  Boolean, enables or disables internal IO
 
 ## Service `StorageVolumeAddSchema`
 
