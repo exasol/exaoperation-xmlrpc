@@ -404,6 +404,8 @@ Edits object.
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
 * `comment` (`TextLine`, optional)
   Description of the driver, not required.
+* `disable_security_manager` (`Bool`, optional)
+  This option may be required to allow unsupported JDBC drivers to be run. However, it is not recommended to use this option.
 * `jdbc_main` (`TextLine`)
   Name of the main class.
 * `jdbc_name` (`TextLine`)
@@ -439,7 +441,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `description` (`TextLine`, optional)
   Some description of this logservice.
 * `exaclusteros_services` (`List`)
-  EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage'
+  EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage', 'Authentication'
 * `exasolution_systems` (`List`)
   Database systems which should be visible at monitor.
 * `priority` (`Choice`)
@@ -469,7 +471,7 @@ Function returns a dictionary that describes an object. Keys are:
 * `description`
   Some description of this logservice.
 * `exaclusteros_services`
-  EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage'
+  EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage', 'Authentication'
 * `exasolution_systems`
   Database systems which should be visible at monitor.
 * `priority`
@@ -503,7 +505,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `disktype` (`Choice`)
   Type of storage for which this disk will be used.
 * `raidredundancy` (`Int`, optional)
-  Number of copies of each datablock on RAID 10.
+  Number of copies of each datablock on RAID 10, only used if RAID 10 is selected in "Disk RAID" field.
 
 ### Method `addStorageDisk`
 
@@ -584,7 +586,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `public_network_list` (`FixedDict`, optional)
   Additional public network interfaces in node.
 * `raidredundancy` (`Int`, optional)
-  Number of copies of each datablock on RAID 10.
+  Number of copies of each datablock on RAID 10, only used if RAID 10 is selected in "Disk RAID" field.
 * `spool_disk` (`Choice`)
   Disk for spool data of loading processes and other.
 * `to_install` (`Bool`, optional)
@@ -757,6 +759,8 @@ Create a new object type JDBCDriver
 Function takes a dictionary with parameters, allowed keys are:
 * `comment` (`TextLine`, optional)
   Description of the driver, not required.
+* `disable_security_manager` (`Bool`, optional)
+  This option may be required to allow unsupported JDBC drivers to be run. However, it is not recommended to use this option.
 * `jdbc_main` (`TextLine`)
   Name of the main class.
 * `jdbc_name` (`TextLine`)
@@ -788,7 +792,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `description` (`TextLine`, optional)
   Some description of this logservice.
 * `exaclusteros_services` (`List`)
-  EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage'
+  EXAClusterOS services which should be visible at monitor, possible values: 'EXAoperation', 'DWAd', 'Lockd', 'Load', 'Storage', 'Authentication'
 * `exasolution_systems` (`List`)
   Database systems which should be visible at monitor.
 * `priority` (`Choice`)
@@ -854,7 +858,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `public_network_list` (`FixedDict`, optional)
   Additional public network interfaces in node.
 * `raidredundancy` (`Int`, optional)
-  Number of copies of each datablock on RAID 10.
+  Number of copies of each datablock on RAID 10, only used if RAID 10 is selected in "Disk RAID" field.
 * `spool_disk` (`Choice`)
   Disk for spool data of loading processes and other.
 * `to_install` (`Bool`, optional)
@@ -892,7 +896,7 @@ Create a new object type RemoteVolume
 
 Function takes a dictionary with parameters, allowed keys are:
 * `allowed_users` (`List`)
-  List of users allowed to access volume.
+  List of users, who are allowed to access this volume, in XMLRPC a list of user IDs as returned by `getUserByName`.
 * `labels` (`List`, optional)
   A List of labels to identify the volume.
 * `options` (`TextLine`, optional)
@@ -900,7 +904,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `password` (`Password`, optional)
   Password for remote archive.
 * `readonly_users` (`List`)
-  List of users allowed to read volume.
+  List of users, who are allowed to read this volume, in XMLRPC a list of user IDs, as returned by `getUserByName`.
 * `url` (`TextLine`)
   Remote URL for archive volume, e.g. "ftp://192.168.2.1:12345" or "smb:////192.168.2.1/backupshare".
 * `user` (`TextLine`, optional)
@@ -1035,7 +1039,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `default_os_size` (`Int`)
   Default size of the OS disk in GiB.
 * `default_raidredundancy` (`Int`)
-  Default number of copies of each datablock on the RAID 10 arrays.
+  Default number of copies of each datablock on the RAID 10 arrays, used only if RAID 10 is selected in "Default RAID" field.
 * `default_swap_size` (`Int`)
   Default size of the swap disk in GiB.
 
@@ -1683,7 +1687,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `disksize` (`Int`, optional)
   The size of this disk in GiB or maximum if not entered.
 * `raidredundancy` (`Int`, optional)
-  Number of copies of each datablock on RAID 10.
+  Number of copies of each datablock on RAID 10, only used if RAID 10 is selected in "Disk RAID" field.
 
 ### Method `getProperties`
 
@@ -1699,7 +1703,7 @@ Edits object.
 
 Function take a dictionary with parameters and return a list of fields, that was modified, allowed keys are:
 * `allowed_users` (`List`)
-  List of users allowed to access volume.
+  List of users, who are allowed to access this volume, in XMLRPC a list of user IDs as returned by `getUserByName`.
 * `labels` (`List`, optional)
   A List of labels to identify the volume.
 * `options` (`TextLine`, optional)
@@ -1707,7 +1711,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `password` (`Password`, optional)
   Password for remote archive.
 * `readonly_users` (`List`)
-  List of users allowed to read volume.
+  List of users, who are allowed to read this volume, in XMLRPC a list of user IDs, as returned by `getUserByName`.
 * `url` (`TextLine`)
   Remote URL for archive volume, e.g. "ftp://192.168.2.1:12345" or "smb:////192.168.2.1/backupshare".
 * `user` (`TextLine`, optional)
@@ -1717,7 +1721,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 
 Function returns a dictionary that describes an object. Keys are:
 * `allowed_users`
-  List of users allowed to access volume.
+  List of users, who are allowed to access this volume, in XMLRPC a list of user IDs as returned by `getUserByName`.
 * `labels`
   A List of labels to identify the volume.
 * `options`
@@ -1725,7 +1729,7 @@ Function returns a dictionary that describes an object. Keys are:
 * `password`
   Password for remote archive.
 * `readonly_users`
-  List of users allowed to read volume.
+  List of users, who are allowed to read this volume, in XMLRPC a list of user IDs, as returned by `getUserByName`.
 * `url`
   Remote URL for archive volume, e.g. "ftp://192.168.2.1:12345" or "smb:////192.168.2.1/backupshare".
 * `user`
@@ -2205,6 +2209,10 @@ Get estimated size of debug information.
 ### Method `getProperties`
 
 This object has no properties.
+
+### Method `getSupportData`
+
+Return the information for EXASOL support.
 
 ### Method `storeDebugInfo`
 
