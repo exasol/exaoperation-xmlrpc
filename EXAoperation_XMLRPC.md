@@ -909,6 +909,8 @@ Function takes a dictionary with parameters, allowed keys are:
   Remote URL for archive volume, e.g. "ftp://192.168.2.1:12345" or "smb:////192.168.2.1/backupshare".
 * `user` (`TextLine`, optional)
   Username for remote archive.
+* `vid` (`Int`, optional, readonly)
+  ID of remote volume
 
 ### Method `addRoute`
 
@@ -1018,6 +1020,10 @@ Function take a dictionary with parameters and return a list of fields, that was
   Level upon which warnings about load will be issued.
 * `sqllog_deletion_time` (`Int`)
   Number of days after which SQL logs will be deleted.
+* `storage_usage_error` (`Int`)
+  Level upon which errors about storage space will be issued.
+* `storage_usage_warning` (`Int`)
+  Level upon which warnings about storage space will be issued.
 * `swap_error` (`Int`)
   Level upon which errors about swap space will be issued.
 * `swap_warning` (`Int`)
@@ -1083,7 +1089,7 @@ Function take a dictionary with parameters and return a list of fields, that was
 * `search_domain` (`TextLine`, optional)
   Search domain to use with DNS servers.
 * `time_zone` (`Choice`)
-  The time zone of cluster.
+  Time zone of cluster. Databases must be stopped and afterwards started to recognize a change of this setting.
 
 ### Method `editRemoteSyslogSettings`
 
@@ -1321,10 +1327,6 @@ Return description of a Server Management group from descriptive name or None.
 
 Return descriptive name of a Server Management card group.
 
-### Method `getSupportData`
-
-Return the information for EXASOL support.
-
 ### Method `getUpdateURL`
 
 Get connection URL of update repository (including username/password).
@@ -1389,10 +1391,6 @@ Return True if EXAoperation should be restarted
 ### Method `numberOfAvailableNodes`
 
 Return number of nodes a user can add or 1024*1024 (unlimited).
-
-### Method `powerOffLicenseServer`
-
-Restart license server.
 
 ### Method `reinitEXAoperationPriorities`
 
@@ -1716,6 +1714,8 @@ Function take a dictionary with parameters and return a list of fields, that was
   Remote URL for archive volume, e.g. "ftp://192.168.2.1:12345" or "smb:////192.168.2.1/backupshare".
 * `user` (`TextLine`, optional)
   Username for remote archive.
+* `vid` (`Int`, optional, readonly)
+  ID of remote volume
 
 ### Method `getProperties`
 
@@ -1734,6 +1734,8 @@ Function returns a dictionary that describes an object. Keys are:
   Remote URL for archive volume, e.g. "ftp://192.168.2.1:12345" or "smb:////192.168.2.1/backupshare".
 * `user`
   Username for remote archive.
+* `vid`
+  ID of remote volume
 
 ### Method `getVolumeId`
 
@@ -1968,6 +1970,8 @@ Function returns a dictionary that describes an object. Keys are:
   Space used by volumes in GiB on this node.
 * `phys_nid`
   EXAClusterOS physical node ID of the given node.
+* `space_warn_threshold`
+  Level upon which warnings about high EXAStorage Disk Device space will be issued.
 * `state`
   State of the volume.
 
@@ -2004,6 +2008,10 @@ Resume node.
 ### Method `setBgRecoveryLimit`
 
 Set background recovery limit in MiB for node.
+
+### Method `setSpaceWarnThreshold`
+
+Set space warn threshold in percent for node.
 
 ### Method `suspendNode`
 
