@@ -124,12 +124,6 @@ Then the database itself can be created and started:
 
 After some time the `connectible` is set to 'Yes' and the database can be used.
 
-# Example tools
-
-In this repository you will find following example tools:
-* `startdatabase.py` - initialize and start a test database
-* `logentries.py` - shows current log entries
-
 # Brief reference of all functions
 
 ```
