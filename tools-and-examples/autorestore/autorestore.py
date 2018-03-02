@@ -55,7 +55,7 @@ try:
         lastBackupId = 0
         for item in list:
             itemVolumeId = convertVolumeId(item['volume'])
-            volumeId = convertVolumeId('v0003')
+            volumeId = convertVolumeId(archiveVolume)
             if (itemVolumeId == volumeId) and (item['bid'] >= lastBackupId):
                 latestBackupIdentifier = item['id']
                 lastBackupId = item['bid']
@@ -75,6 +75,9 @@ try:
         database.restoreDatabase(latestBackupIdentifier, 'blocking')
         print('Restore process successfully triggered.')
         exit(0)
+    else:
+        print('No backup found!')
+        exit(1)
 
 except Exception as e:
     if 'unauthorized' in str(e).lower():
