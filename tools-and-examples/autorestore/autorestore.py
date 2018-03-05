@@ -21,6 +21,7 @@ try:
     hostName = config.get('autorestore', 'hostname')
     databaseName = config.get('autorestore', 'database')
     archiveVolume = config.get('autorestore', 'archive')
+    foreignDatabaseName = config.get('autorestore', 'foreign_database')
 
 except NoOptionError as err:
     stderr.write('%s\n' % err)
@@ -48,20 +49,22 @@ def convertVolumeId(volumeId):
 try:
     cluster = XmlRpcCall('/')
     database = XmlRpcCall('/db_' + quote_plus(databaseName))
-
     latestBackupIdentifier = None
-    list = database.getBackups()
+
+    list = database.getBackups(True, True)
     if list and len(list) > 0:
         lastBackupId = 0
         for item in list:
             itemVolumeId = convertVolumeId(item['volume'])
             volumeId = convertVolumeId(archiveVolume)
-            if (itemVolumeId == volumeId) and (item['bid'] >= lastBackupId):
+            if  item['system'] == foreignDatabaseName \
+                and item['usable'] and (itemVolumeId == volumeId) \
+                and (item['bid'] >= lastBackupId):
                 latestBackupIdentifier = item['id']
                 lastBackupId = item['bid']
 
     if latestBackupIdentifier:
-        print('BackupId of last backup in volume %s is %i' % (volumeId, lastBackupId))
+        print('BackupId of last backup in volume %s is %i (%s)' % (volumeId, lastBackupId, latestBackupIdentifier))
         if database.runningDatabase():
             print('Database is online yet; shutting down database now')
             database.shutdownDatabase();
