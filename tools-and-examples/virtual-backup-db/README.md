@@ -1,4 +1,4 @@
-# virtual-backup-db - start up virtual restores from your last backup 
+# virtual-backup-db - starts up virtual access restores from your latest backup set
 
 This script is very similar to the "autorestore" script, but there are three differences:
 1. Instead of "blocking" the "virtual access" mode is used to trigger the database restore
