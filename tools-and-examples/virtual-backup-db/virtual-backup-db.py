@@ -4,7 +4,8 @@ from ConfigParser   import SafeConfigParser
 from sys            import exit, stdout, stderr
 from urllib         import quote_plus
 from xmlrpclib      import ServerProxy
-from time           import sleep
+from time           import sleep, mktime
+from datetime       import datetime
 
 userName = None
 password = None
@@ -16,12 +17,12 @@ archiveVolume = None
 try:
     config = SafeConfigParser()
     config.read('virtual-backup-db.cfg')
-    userName = config.get('autorestore', 'username')
-    password = config.get('autorestore', 'password')
-    hostName = config.get('autorestore', 'hostname')
-    databaseName = config.get('autorestore', 'database')
-    archiveVolume = config.get('autorestore', 'archive')
-    foreignDatabaseName = config.get('autorestore', 'foreign_database')
+    userName = config.get('virtualbackup', 'username')
+    password = config.get('virtualbackup', 'password')
+    hostName = config.get('virtualbackup', 'hostname')
+    databaseName = config.get('virtualbackup', 'database')
+    archiveVolume = config.get('virtualbackup', 'archive')
+    foreignDatabaseName = config.get('virtualbackup', 'foreign_database')
 
 except NoOptionError as err:
     stderr.write('%s\n' % err)
@@ -50,6 +51,9 @@ try:
     cluster = XmlRpcCall('/')
     database = XmlRpcCall('/db_' + quote_plus(databaseName))
     latestBackupIdentifier = None
+    latestBackupExpiration = 0
+    latestBackupExpireAlterable = None
+    latestBackupItemVolumeId = None
 
     list = database.getBackups(True, True)
     if list and len(list) > 0:
@@ -62,6 +66,10 @@ try:
                 and (item['bid'] >= lastBackupId):
                 latestBackupIdentifier = item['id']
                 lastBackupId = item['bid']
+                latestBackupExpireAlterable = item['expire_alterable']
+                latestBackupItemVolumeId = itemVolumeId
+                if item['expire'] and item['expire'] != '':
+                    latestBackupExpiration = int(mktime(datetime.strptime(item['expire'], '%Y-%m-%d %H:%M').timetuple()))
 
     if latestBackupIdentifier:
         print('BackupId of last backup in volume %s is %i (%s)' % (volumeId, lastBackupId, latestBackupIdentifier))
@@ -74,9 +82,18 @@ try:
             print('Database is offline; continuing restore procedure')
         else:
             print('Database is already offline; continuing restore procedure')
+
+        print('Resetting expiration date of backup set')
+        database.changeBackupExpiration(latestBackupItemVolumeId, latestBackupExpireAlterable.split(' ')[1], 0)
+
         print('Triggering restore process')
-        database.restoreDatabase(latestBackupIdentifier, 'blocking')
+        database.restoreDatabase(latestBackupIdentifier, 'virtual access')
         print('Restore process successfully triggered.')
+
+        print('Writing back expiration date of backup set')
+        database.changeBackupExpiration(latestBackupItemVolumeId, latestBackupExpireAlterable.split(' ')[1], latestBackupExpiration)
+        print('All done.')
+
         exit(0)
     else:
         print('No backup found!')
