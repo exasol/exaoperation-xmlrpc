@@ -26,6 +26,8 @@ Required arguments:
   --port PORT           Port number of license node
   --packages PACKAGES [PACKAGES ...]
                         List of package paths
+
+Optional arguments:
   --loglevel [LOGLEVEL]
                         Logging level, default value 20
   --dest [DEST]         The destination directory, where the update packages
@@ -33,5 +35,4 @@ Required arguments:
                         does not exist, it will be created. This directory
                         will be removed after the update. Default destination
                         /tmp/
-
 ```

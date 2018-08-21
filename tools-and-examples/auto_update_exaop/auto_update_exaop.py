@@ -26,8 +26,9 @@ required_args.add_argument('--ip', help='IP address of license node')
 required_args.add_argument('--node_ips', nargs='+', help='List of ip addresses of cluster nodes')
 required_args.add_argument('--port', help='Port number of license node')
 required_args.add_argument('--packages', nargs='+', help='List of package paths')
-required_args.add_argument('--loglevel', nargs='?', const=20, default=20, help='Logging level, default value 20')
-required_args.add_argument('--dest', nargs='?', const='/tmp/', default='/tmp/', help='The destination directory, where the update packages should be copied and uploaded. If the given directoy does not exist, it will be created. This directory will be removed after the update. Default destination /tmp/')
+optional_args = parser.add_argument_group('Optional arguments')
+optional_args.add_argument('--loglevel', nargs='?', const=20, default=20, help='Logging level, default value 20')
+optional_args.add_argument('--dest', nargs='?', const='/tmp/', default='/tmp/', help='The destination directory, where the update packages should be copied and uploaded. If the given directoy does not exist, it will be created. This directory will be removed after the update. Default destination /tmp/')
 
 
 # init logger
@@ -179,7 +180,7 @@ def reboot_and_restart(cluster, cluster_path, storage, current_installation_hist
     # check installation history
     histories = cluster.getInstallationHistory()
     for his in histories:
-        logger.info('%s: Installation histories: ', func_name, his)
+        logger.info('%s: Installation histories: %s', func_name, his)
     if len(histories) <= len(current_installation_history):
         logger.error('%s: Upgrade is not successful, installation histories has no change, please restart upload', func_name)
         return 1
@@ -309,8 +310,6 @@ def main():
     # store the input package names
     pkg_names = []
     pkg_paths = args.packages
-
-    exit(0)
 
     # prepare update
     ret = prepare_update(cluster, cluster_path, storage)
