@@ -198,10 +198,10 @@ def reboot_and_restart(cluster, cluster_path, storage, current_installation_hist
 
     # reboot cluster nodes via ssh
     for node in node_ips:
-        sts, out = commands.getstatusoutput('ssh {0} -p 20 reboot'.format(node))
+        sts, out = commands.getstatusoutput('ssh root@{0} -p 20 reboot'.format(node))
         if sts != 0:
             logger.exception('%s: Cannot reboot %s', func_name, node)
-            sleep(10)
+            time.sleep(10)
             continue
 
     time.sleep(20)
