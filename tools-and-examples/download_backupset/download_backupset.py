@@ -89,7 +89,7 @@ if not (licenseServer and sourceDatabase and backupPath and userName and passwor
 def ServerProxy(urlPath):
     url = 'https://%s:%s@%s/%s' % (quote_plus(userName), quote_plus(password), licenseServer, urlPath)
     if hasattr(ssl, 'SSLContext'):
-        sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+        sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
         sslcontext.verify_mode = ssl.CERT_NONE
         sslcontext.check_hostname = False
         return xmlrpclib.ServerProxy(url, context=sslcontext)

@@ -12,7 +12,7 @@ hostName = '10.10.0.10'
 def XmlRpcCall(urlPath = ''):
     url = 'https://%s:%s@%s/cluster1%s' % (quote_plus(userName), quote_plus(password), hostName, urlPath)
     if hasattr(ssl, 'SSLContext'):
-        sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1)
+        sslcontext = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
         sslcontext.verify_mode = ssl.CERT_NONE
         sslcontext.check_hostname = False
         return ServerProxy(url, context=sslcontext)
