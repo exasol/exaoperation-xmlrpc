@@ -201,7 +201,7 @@ Function takes a dictionary with parameters, allowed keys are:
 * `labels` (`List`, optional)
   A List of labels to identify the volume.
 * `options` (`TextLine`, optional)
-  cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, delegation_token, or s3. Separated by comma. See manual for details.
+  cleanvolume, noverifypeer, nocompression, forcessl, webdav, webhdfs, delegation_token, noearlytls or s3. Separated by comma. See manual for details.
 * `password` (`Password`, optional)
   Password for remote archive.
 * `readonly_users` (`List`)
@@ -463,6 +463,8 @@ Function returns a dictionary that describes an object. Keys are:
   Default size of the swap disk in GiB.
 * `disable_broadcast`
   Disable usage of broadcasts, activate if network does not allow broadcasts.
+* `disable_earlytls`
+  Disable Early TLS for EXAoperation Interfaces.
 * `disk_usage_error`
   Level upon which errors about disk space will be issued.
 * `disk_usage_warning`
@@ -580,6 +582,12 @@ Function takes a dictionary with parameters, allowed keys are:
   Enable auditing for database
 * `extra_params` (`TextLine`, optional)
   Extra parameters for startup of database.
+* `krb_host` (`TextLine`, optional)
+  Kerberos Host Name used for Kerberos authentication
+* `krb_realm` (`TextLine`, optional)
+  Kerberos Realm
+* `krb_service` (`TextLine`, optional)
+  Kerberos Service Name used for Kerberos authentication, e.g. exasol
 * `ldap_server` (`TextLine`, optional)
   LDAP Server to use for remote database authentication, e.g. ldap[s]://192.168.16.10 . Multiple servers must be separated by commas.
 * `memory_usage` (`Int`)
@@ -1160,6 +1168,8 @@ Function take a dictionary with parameters and return a list of fields, that was
   Gateway IP address to external network.
 * `disable_broadcast` (`Bool`, optional)
   Disable usage of broadcasts, activate if network does not allow broadcasts.
+* `disable_earlytls` (`Bool`, optional)
+  Disable Early TLS for EXAoperation Interfaces.
 * `dns_server1` (`TextLine`, optional)
   IP address of first DNS server.
 * `dns_server2` (`TextLine`, optional)
@@ -1415,6 +1425,7 @@ Usage: `storage.volumeRemove(vname)`
 Parameters:
 * `vname`
   Name of the as returned by `getVolumeList()`.
+  Or volume object name returned by `getVolumeInfo(volume_id)`
 
 ```
 
@@ -1524,10 +1535,12 @@ Parameters:
 ```
 Returns information about volume.
     
-Usage: `storage.getVolumeInfo(vid)`
+Usage: `storage.getVolumeInfo(vid or remote volume object name)`
 Parameters:
 * `vid`
   Volume id as returned by `getVolumeList()`.
+* `remote volume object name`
+  Remote volume object name as returnedbvy `cluster.listObjects()`, for example 'remote1'
 
 ```
 
@@ -1700,7 +1713,7 @@ Note: this function is not really supported. For a list of parameters please use
 ```
 
 
-## database = XmlRpcCall('/db_exa_db1')
+## database = XmlRpcCall('/db_training2')
 ### database.backupInfo()
 ```
 Return information for a backup.
@@ -1736,6 +1749,12 @@ Parameters:
 
 DUPLICATE OF: `backupInfo`
 
+```
+
+
+### database.existsKeyTab()
+```
+Return whether a keytab exists.
 ```
 
 
@@ -1918,6 +1937,12 @@ Function returns a dictionary that describes an object. Keys are:
   Enable auditing for database
 * `extra_params`
   Extra parameters for startup of database.
+* `krb_host`
+  Kerberos Host Name used for Kerberos authentication
+* `krb_realm`
+  Kerberos Realm
+* `krb_service`
+  Kerberos Service Name used for Kerberos authentication, e.g. exasol
 * `ldap_server`
   LDAP Server to use for remote database authentication, e.g. ldap[s]://192.168.16.10 . Multiple servers must be separated by commas.
 * `memory_usage`
@@ -1941,6 +1966,18 @@ Function returns a dictionary that describes an object. Keys are:
 * `volume_restore_delay`
   Move failed volume nodes to used reserve nodes automaticaly after given amount of time, or disable it with no value.
 
+```
+
+
+### database.removeKeyTab()
+```
+Remove an uploaded keytab file.
+```
+
+
+### database.uploadKeyTab()
+```
+Upload keytab file.
 ```
 
 
@@ -2056,6 +2093,12 @@ Function take a dictionary with parameters and return a list of fields, that was
   Enable auditing for database
 * `extra_params` (`TextLine`, optional)
   Extra parameters for startup of database.
+* `krb_host` (`TextLine`, optional)
+  Kerberos Host Name used for Kerberos authentication
+* `krb_realm` (`TextLine`, optional)
+  Kerberos Realm
+* `krb_service` (`TextLine`, optional)
+  Kerberos Service Name used for Kerberos authentication, e.g. exasol
 * `ldap_server` (`TextLine`, optional)
   LDAP Server to use for remote database authentication, e.g. ldap[s]://192.168.16.10 . Multiple servers must be separated by commas.
 * `memory_usage` (`Int`)
@@ -2392,12 +2435,18 @@ Note: this function is not really supported. For a list of parameters please use
 ```
 
 
-## node = XmlRpcCall(/'n0011')
+## node = XmlRpcCall('/n0011')
 ### node.setForceFSCKMode()
 ```
 Set the node to Force fsck state.
 
 Usage: node.setFSCKMode()
+```
+
+
+### node.getBondingActiveSlaves()
+```
+Return active slaves for bondings
 ```
 
 
