@@ -18,7 +18,7 @@ DEST_PATH = None
 parser = argparse.ArgumentParser(description='Update EXASuite automatically')
 #parser.add_argument('--dest', help="destination path to store downloaded package")
 required_args = parser.add_argument_group('Required arguments')
-required_args.add_argument('--timeout', help='Timeout for upgrading the management node in minutes')
+#required_args.add_argument('--timeout', help='Timeout for upgrading the management node in minutes', default=60)
 required_args.add_argument('--protocol', help='Communication protocol, https or http')
 required_args.add_argument('--user', help='Username to login to EXAoperation')
 required_args.add_argument('--password', help='Password of the given username')
@@ -27,8 +27,9 @@ required_args.add_argument('--node_ips', nargs='+', help='List of ip addresses o
 required_args.add_argument('--port', help='Port number of license node')
 required_args.add_argument('--packages', nargs='+', help='List of package paths')
 optional_args = parser.add_argument_group('Optional arguments')
-optional_args.add_argument('--loglevel', nargs='?', const=20, default=20, help='Logging level, default value 20')
-optional_args.add_argument('--dest', nargs='?', const='/tmp/', default='/tmp/', help='The destination directory, where the update packages should be copied and uploaded. If the given directoy does not exist, it will be created. This directory will be removed after the update. Default destination /tmp/')
+optional_args.add_argument('--loglevel', nargs='?', const=20, default=20, help='Logging level, default value is 20')
+optional_args.add_argument('--timeout', help='Timeout for upgrading the management node in minutes, default value is 60', default=60)
+optional_args.add_argument('--dest', nargs='?', const='/tmp/exasuite_update/', default='/tmp/exasuite_update/', help='The destination directory, where the update packages should be copied and uploaded. If the given directoy does not exist, it will be created. This directory will be removed after the update. Default destination /tmp/exasuite_update')
 
 
 # init logger
@@ -126,15 +127,6 @@ def upload_package(cluster, pkg_dest_path):
     func_name = upload_package.__name__
     logger.info('%s: Uploading %s', func_name, pkg_dest_path)	
     # upload package
-#    session = requests.session()
-#    csrftoken = session.get(software_https_path).cookies['__csrftoken__']
-#    response = session.post(software_https_path, data = {'__csrftoken__': csrftoken, 'update_submit_button': '1'}, files = {'software_upload_file': open(pkg_dest_path)})
-#    if response.status_code != 200:
-#        logger.error('%s: Response code of upload package is %s', func_name, str(response.status_code))
-#        return 1
-#    else:
-#        logger.info('%s: Uploaded package', func_name)
-#        return 0
     try:
         p = xmlrpclib.Binary(open(pkg_dest_path).read())
         cluster.uploadSoftware(p)
@@ -143,12 +135,6 @@ def upload_package(cluster, pkg_dest_path):
         return 1
 	logger.info('%s: Upload %s done', func_name, pkg_dest_path)
     return 0
-
-        # try:
-    #     cluster.uploadSoftware(pkg_dest_path)
-    # except Exception, e:
-    #     print("upload failed %s" % e)
-    #     return 1
 
 def reboot_and_restart(cluster, cluster_path, storage, current_installation_history, node_ips):
     func_name = upload_package.__name__
@@ -160,6 +146,7 @@ def reboot_and_restart(cluster, cluster_path, storage, current_installation_hist
         license_server = 'n0' + str(license_server_num)
     elif license_server_num > 999:
         license_server = 'n' + str(license_server_num)
+    print(license_server)
     try:
         cluster.restartLicenseServer(license_server)
     except Exception as e:
@@ -185,17 +172,6 @@ def reboot_and_restart(cluster, cluster_path, storage, current_installation_hist
         logger.error('%s: Upgrade is not successful, installation histories has no change, please restart upload', func_name)
         return 1
     logger.info('%s: Installation histories are ok', func_name)
-
-
-    # # reboot cluster nodes
-    # for node_name in cluster.getNodeList():
-    #     node = ssl_server_proxy(cluster_path + '/' + node_name)
-    #     try:
-    #         node.rebootNode()
-    #         logger.info("%s: Rebooting node: %s", func_name, node_name)
-    #     except Exception:
-    #         sleep(10)
-    #         continue
 
     # reboot cluster nodes via ssh
     for node in node_ips:
@@ -285,7 +261,6 @@ def main():
     LOGGING_LEVEL = args.loglevel
     DEST_PATH = args.dest
     cluster_path = '{0}://{1}:{2}@{3}:{4}/cluster1'.format(args.protocol, args.user, args.password, args.ip, args.port)
-    #software_https_path = '{0}://{1}:{2}@{3}:{4}/cluster1/software.html'.format('http', args.user, args.password, args.ip, 1080)
     if args.protocol is None or args.user is None or args.password is None or args.ip is None or args.port is None:
         parser.print_help()
         exit(1)
@@ -317,10 +292,6 @@ def main():
         clean_up(DEST_PATH)
         exit(1)
 
-    # sort package paths
-    # example of links:
-    # https://www.exasol.com/support/secure/attachment/55195/EXAClusterOS-6.0.4_LS-Update.pkg
-    # https://www.exasol.com/support/secure/attachment/65453/EXASOL-6.0-CentOS-6-CumulativeUpdate-16.pkg
     # do upload, LS_UPDATE will be installed firstly
     for pkg in pkg_paths:
         if 'LS-Update' in pkg:
@@ -348,10 +319,7 @@ def main():
                 continue
             logger.info('%s: Moving done', func_name)
             pkg_dest_path = DEST_PATH + pkg_name
-
-        #run_ret = run_update(cluster, cluster_path, software_https_path, storage, pkg_dest_path, current_cos_version, current_installation_history)
         ret = upload_package(cluster, pkg_dest_path)
-        
         if ret == 1:
             if pkg_path[0:4] == 'https' or pkg_path[0:3] == 'ftp':
                 clean_up(DEST_PATH)
