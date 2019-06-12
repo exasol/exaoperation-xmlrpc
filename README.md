@@ -124,6 +124,22 @@ Then the database itself can be created and started:
 
 After some time the `connectible` is set to 'Yes' and the database can be used.
 
+## Upload certificate to license node
+
+The certificate and private key should be in pem format.
+Load the files into string buffer:
+```
+cert = open('/absolute/path/to/certificate.pem', 'rb').read()
+key = open('/absolute/path/to/key.pem', 'rb').read()
+```
+
+Upload the string buffered certificate and key into license node:
+```
+server.uploadTlsFiles(cert, key)
+```
+
+To use the new certificate and key, Exaoperation has to be restarted.
+
 # Brief reference of all functions
 
 ```
