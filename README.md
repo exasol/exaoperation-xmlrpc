@@ -129,8 +129,8 @@ After some time the `connectible` is set to 'Yes' and the database can be used.
 The certificate and private key should be in pem format.
 Load the files into string buffer:
 ```
-cert = open('/absolute/path/to/certificate.pem', 'rb').read()
-key = open('/absolute/path/to/key.pem', 'rb').read()
+cert = open('/absolute/path/to/certificate.pem', 'r').read()
+key = open('/absolute/path/to/key.pem', 'r').read()
 ```
 
 Upload the string buffered certificate and key into license node:
