@@ -408,6 +408,11 @@ Note: the EXASolution systems need prefix 'db_'
   Method getBackupSchedule
         Return a list of scheduled backups
 
+  Method getBackupList
+        Return a list of backups
+        In version 6.0.x, the return value is [[backup_creation_timestamp, backup_id]]
+        In version 6.1.x, the return value is [[backup_id, archive_volume_id]]
+
   Method getBackups
         Return a list of available backups for this database.
 
