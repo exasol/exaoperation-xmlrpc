@@ -1,3 +1,75 @@
+# Workaround to 'Unknown type: nil' for xmlrpc client library other than python
+## Exception raised for xmlrpc methods that return None
+```
+Failed to parse server's response: Unknown type: nil
+org.apache.xmlrpc.client.XmlRpcClientException: Failed to parse server's response: Unknown type: nil
+	at org.apache.xmlrpc.client.XmlRpcStreamTransport.readResponse(XmlRpcStreamTransport.java:188)
+	at org.apache.xmlrpc.client.XmlRpcStreamTransport.sendRequest(XmlRpcStreamTransport.java:156)
+	at org.apache.xmlrpc.client.XmlRpcHttpTransport.sendRequest(XmlRpcHttpTransport.java:143)
+	at org.apache.xmlrpc.client.XmlRpcSunHttpTransport.sendRequest(XmlRpcSunHttpTransport.java:69)
+	at org.apache.xmlrpc.client.XmlRpcClientWorker.execute(XmlRpcClientWorker.java:56)
+	at org.apache.xmlrpc.client.XmlRpcClient.execute(XmlRpcClient.java:167)
+	at org.apache.xmlrpc.client.XmlRpcClient.execute(XmlRpcClient.java:158)
+	at org.apache.xmlrpc.client.XmlRpcClient.execute(XmlRpcClient.java:147)
+	at ExasolXmlRpc.startDatabase(ExasolXmlRpc.java:97)
+	at ExasolXmlRpc.main(ExasolXmlRpc.java:171)
+Caused by: org.xml.sax.SAXParseException; lineNumber: 5; columnNumber: 14; Unknown type: nil
+	at org.apache.xmlrpc.parser.RecursiveTypeParserImpl.startElement(RecursiveTypeParserImpl.java:122)
+	at org.apache.xmlrpc.parser.XmlRpcResponseParser.startElement(XmlRpcResponseParser.java:148)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.startElement(AbstractSAXParser.java:509)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractXMLDocumentParser.emptyElement(AbstractXMLDocumentParser.java:182)
+	at com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.scanStartElement(XMLNSDocumentScannerImpl.java:351)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl$FragmentContentDriver.next(XMLDocumentFragmentScannerImpl.java:2784)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl.next(XMLDocumentScannerImpl.java:602)
+	at com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl.next(XMLNSDocumentScannerImpl.java:112)
+	at com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl.scanDocument(XMLDocumentFragmentScannerImpl.java:505)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:842)
+	at com.sun.org.apache.xerces.internal.parsers.XML11Configuration.parse(XML11Configuration.java:771)
+	at com.sun.org.apache.xerces.internal.parsers.XMLParser.parse(XMLParser.java:141)
+	at com.sun.org.apache.xerces.internal.parsers.AbstractSAXParser.parse(AbstractSAXParser.java:1213)
+	at com.sun.org.apache.xerces.internal.jaxp.SAXParserImpl$JAXPSAXParser.parse(SAXParserImpl.java:643)
+	at org.apache.xmlrpc.client.XmlRpcStreamTransport.readResponse(XmlRpcStreamTransport.java:186)
+
+```
+## Root cause
+By default, python xmlrpc library just serialize NoneType into xml by a tag 'nil', i.e, 
+```
+<value><nil/></value>
+```
+Even it's NOT a type in XMLRPC standard type.By definition of xmlrpc, NoneType is one of the extentions. Usually, those tags in extentions are defined in a namespace. For example, for apache xmlrpc clients, it uses xml tag 'ex:nil' is used instead:
+```
+Java Type	XML Tag Name	Description
+None	ex:nil	A typeless null value.
+```
+In the above table, the prefix ex refers to the namespace URI http://ws.apache.org/xmlrpc/namespaces/extensions.
+So the misalignment between serializer and parser causes this issue.
+
+## Workaround for apache xmlrpc client (Java)
+Apache xmlrpc client supports customerized types so that a new type factory is extended for NoneType:
+```
+class MyTypeFactory extends TypeFactoryImpl {
+    public MyTypeFactory(XmlRpcController pController) {
+        super (pController);
+    }   
+    public TypeParser getParser(XmlRpcStreamConfig pConfig, NamespaceContextImpl pContext, String pURI, String pLocalName) {
+        if (NullSerializer.NIL_TAG.equals(pLocalName)) {
+            return new NullParser (); 
+        } else {
+            return super.getParser(pConfig, pContext, pURI, pLocalName);
+        }
+    }   
+}
+```
+And then let client instance use this factory:
+```
+public void startDatabase( String name ) {
+    try {
+        m_config.setServerURL( ( new URL( m_baseUrl, "cluster1/db_" + name ) ) );
+        m_client.setConfig( m_config );
+        m_client.setTypeFactory(new MyTypeFactory(m_client));
+        ...
+```
+
 # EXAoperation XMLRPC API
 
 ###### Please note that this is an open source project which is *not officially supported* by EXASOL. We will try to help you as much as possible, but can't guarantee anything since this is not an official EXASOL product.
