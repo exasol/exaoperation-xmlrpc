@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os.path, re, xmlrpclib, base64, ssl
 from pprint import pprint
-from sys import exit, argv 
+from sys import exit, argv
 from getopt import getopt
 from urllib import quote_plus
 from pipes import quote
@@ -37,16 +37,20 @@ for opt in opts:
         print """
     Options:
     -h  shows this help
-    -l  <license server>
-    -u  <user name>
-    -p  <password>
-    -s  <source database name>
-    -b  <backup path>
+    -l  <license server>        (EXAoperation mgmt. server IP address)
+    -u  <user name>             (EXAoperation User that has read access to the storage volumes)
+    -p  <password>              (EXAoperation User password)
+    -s  <source database name>  (The database name to download backups from)
+    -b  <backup path>           (local directory path e.g. '/home/backupuser/backupdir')
     -i  <backup id>             (optional, get backup set with id xxx instead of latest backup)
     -a  <archive volume>        (optional, helps to resolve id conflicts on different volumes)
     -c  <connection string>     (optional, neccessary for additional public networks)
-    -d                          (optional, resolve backup depencies and download all files)
+    -d                          (optional, resolve backup depencies and download all parent backups)
     -o                          (optional, overwrite existing backup sets)
+
+    Example:
+    download_backupset.py -l 10.70.0.10 -u admin -p admin -s exa_b1 -b /home/backupuser/backupdir -a v0010 -i 23 -o -d
+    * Download backup ID 23 from volume ID v0010 of exa_db1, resolve backup dependencies and overwrite existing files *
 """
         exit(0)
     elif parameter == '-l':
@@ -139,12 +143,12 @@ backupList = db.getBackupList()
 # get latest backup id if no id parameter is given
 a = backupId
 if not backupId:
-    a, b = 0, ''
+    print "no backup ID specified, searching the latest one"
+    a, b = 0, 0
     for item in backupList:
         if len(item) == 2 and item[0] > b:
-            a, b = item[1], item[0]
-
-if a > 0:
+            a, b = item[0], item[0]
+if a:
     backupId = a
 else:
     print "No backup set found!"
@@ -156,7 +160,7 @@ if not overwriteBackups and os.path.isdir(backupPath + os.sep + sourceDatabase +
 
 expirationDate = None
 for backup in backupList:
-    if backup[1] == backupId:
+    if backup[0] == backupId:
         backupInfo = db.getBackupInfo(backup[0])
         expirationDate = datetime.strptime(backupInfo['expire date'], '%Y-%m-%d %H:%M')
         if not archiveVolume:
@@ -167,11 +171,10 @@ for backup in backupList:
             if resolveDepencies and len(backupInfo['dependencies']) > 0:
                 for depency in backupInfo['dependencies']:
                     for depBackup in backupList:
-                        if depBackup[1] == depency:
+                        if depBackup[0] == depency:
                             depBackupInfo = db.getBackupInfo(depBackup[0])
                             files += depBackupInfo['files']
 files.sort()
-
 #create local directories and start wget processes
 wgetProcs = {}
 wgetProcsItems = {}
@@ -247,11 +250,10 @@ if allValid:
         match = node0Pattern.search(fileName)
         if match and match.group(1) not in node0Directories:
             node0Directories.append(match.group(1))
-            node0Path = backupPath + os.sep + match.group(1) 
+            node0Path = backupPath + os.sep + match.group(1)
             open(node0Path + 'expire_' + expirationDate.strftime('%Y%m%d%H%M'), 'a').close()
             open(node0Path + 'validated_' + datetime.now().strftime('%Y%m%d%H%M'), 'a').close()
 
     exit(0)
 else:
     exit(2)
-   
