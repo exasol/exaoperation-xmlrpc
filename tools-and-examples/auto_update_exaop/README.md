@@ -38,3 +38,9 @@ Optional arguments:
                         will be removed after the update. Default destination
                         /tmp/exasuite_update
 ```
+
+Example Call:
+``auto_update_exaop.py --timeout 15 --protocol https --user admin --password admin --ip 192.168.0.10 --node_ips 192.168.0.11 192.168.0.12 --port 443 --packages https://x-up.s3.amazonaws.com/7.x/7.1.30/EXAClusterOS-7.1.30_LS-Update.pkg --dest "C:\Temp\updates\\" ``
+
+## Troubleshooting
+With the latest versions of Python, you may receive some sporadic SSL errors. In these cases, try running the script with an earlier version of Python, for example Python 3.8.
